@@ -58,6 +58,10 @@
                                                             Edit
                                                         </a>
                                                         <x-admin.delete-btn :action="route('admin.admins.destroy', $admin->id)"/>
+                                                        <a class="dropdown-item text-dark" href="{{ route('admin.admins.show', $admin->id) }}">
+                                                            <i class="fa-solid fa-eye me-1"></i>
+                                                            Details
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>

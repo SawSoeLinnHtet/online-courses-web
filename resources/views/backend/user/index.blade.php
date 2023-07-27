@@ -57,10 +57,15 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu" style="z-index: 100">
-                                                        <a class="dropdown-item" href="{{ route('admin.users.edit', $user->id) }}"
-                                                            ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                                                        >
+                                                        <a class="dropdown-item" href="{{ route('admin.users.edit', $user->id) }}">
+                                                            <i class="bx bx-edit-alt me-1"></i> 
+                                                            Edit
+                                                        </a>
                                                         <x-admin.delete-btn :action="route('admin.users.destroy', $user->id)"/>
+                                                        <a class="dropdown-item" href="{{ route('admin.users.details', $user->id) }}">
+                                                            <i class="bx bx-edit-alt me-1"></i> 
+                                                            Edit
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>

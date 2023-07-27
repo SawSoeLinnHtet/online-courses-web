@@ -60,6 +60,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <script src="{{ asset('backend/js/main.js') }}"></script>
+    <script src="{{ asset('backend/js/pages-account-settings-account.js') }}"></script>
     <script src="{{ asset('backend/js/dashboards-analytics.js') }}"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 

@@ -3,16 +3,16 @@
 @section('content')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 class="fw-bold py-3 mb-4">
-                Instructors
-            </h4>
-            <a href="{{ route('admin.instructors.create') }}" class="btn btn-primary btn-md mb-3 d-flex align-items-center">
-                <i class="fa-solid fa-square-plus me-2"></i>
-                Create New
-            </a>
-        </div>
-        <div class="row">
+        <div class="row px-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold py-3 mb-4">
+                    Instructors
+                </h4>
+                <a href="{{ route('admin.instructors.create') }}" class="btn btn-primary btn-md mb-3 d-flex align-items-center">
+                    <i class="fa-solid fa-square-plus me-2"></i>
+                    Create New
+                </a>
+            </div>
             <div class="card py-3">
                 @if($instructors->count() !== 0)
                     <div class="table-responsive text-nowrap" style="min-height: 500px">
@@ -63,6 +63,10 @@
                                                             ><i class="bx bx-edit-alt me-1"></i> Edit</a
                                                         >
                                                         <x-admin.delete-btn :action="route('admin.instructors.destroy', $instructor->id)" />
+                                                        <a class="dropdown-item text-dark" href="{{ route('admin.instructors.show', $instructor->id) }}">
+                                                            <i class="fa-solid fa-eye me-1"></i>
+                                                            Details
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>

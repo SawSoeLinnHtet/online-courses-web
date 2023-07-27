@@ -1,15 +1,4 @@
-{{-- <div class="dropdown-item text-left text-danger">
-    <form action="{{ $action }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-link text-danger text-secondary p-0">
-            <i class="bx bx-trash me-1"></i> 
-            Delete
-        </button>
-    </form>
-</div> --}}
-
-<a href="#" data-url="{{ $action }}" class="delete-btn dropdown-item text-info edit-btn text-danger"><i class="bx bx-trash me-1"></i>Delete</a>
+<a href="#" data-url="{{ $action }}" class="{{ $style ?? 'dropdown-item' }} delete-btn text-info text-danger"><i class="bx bx-trash me-1"></i>Delete</a>
 
 @push('script')
     

@@ -7,14 +7,16 @@ use Illuminate\View\Component;
 class DeleteBtn extends Component
 {
     public $action;
+    public $style;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($action)
+    public function __construct($action, $style = null)
     {
         $this->action = $action;
+        $this->style = $style;
     }
 
     /**
