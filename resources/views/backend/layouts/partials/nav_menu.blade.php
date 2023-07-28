@@ -5,21 +5,21 @@
     </a>
 </li>
 
-<li class="menu-item py-2 @if (Request::is('admin/admins')) {{'active'}} @endif">
+<li class="menu-item py-2 {{ (request()->segment(2) == 'admins') ? 'active' : '' }}">
     <a href="{{ route('admin.admins.index') }}" class="menu-link">
         <i class="menu-icon tf-icons fa-solid fa-user-tie"></i>
         <div data-i18n="Analytics">Admins</div>
     </a>
 </li>
 
-<li class="menu-item py-2 @if (Request::is('admin/instructors')) {{'active'}} @endif">
+<li class="menu-item py-2 {{ (request()->segment(2) == 'instructors') ? 'active' : '' }}">
     <a href="{{ route('admin.instructors.index') }}" class="menu-link">
         <i class="menu-icon tf-icons fa-solid fa-user-graduate"></i>
         <div data-i18n="Analytics">Instructors</div>
     </a>
 </li>
 
-<li class="menu-item py-2 @if (Request::is('admin/users')) {{'active'}} @endif">
+<li class="menu-item py-2 {{ (request()->segment(2) == 'users') ? 'active' : '' }}">
     <a href="{{ route('admin.users.index') }}" class="menu-link">
         <i class="menu-icon tf-icons fa-solid fa-users"></i>
         <div data-i18n="Analytics">Users</div>
@@ -30,7 +30,7 @@
     <span class="menu-header-text">Courses</span>
 </li>
 
-<li class="menu-item py-2 @if (Request::is('admin/categories')) {{'active'}} @endif">
+<li class="menu-item py-2 {{ (request()->segment(2) == 'categories') ? 'active' : '' }}">
     <a href="{{ route('admin.categories.index') }}" class="menu-link">
         <i class="menu-icon tf-icons fa-solid fa-shapes"></i>
         <div data-i18n="Analytics">Categories</div>
