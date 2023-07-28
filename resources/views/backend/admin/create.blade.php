@@ -18,7 +18,7 @@
                             @include('backend.admin.partials._form', ['disable' => false])
                             <div class="row justify-content-end">
                                 <div class="col-sm-10 d-flex justify-content-end">
-                                    <button class="btn btn-secondary me-3">Cancel</button>
+                                    <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary me-3">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Send</button>
                                 </div>
                             </div>

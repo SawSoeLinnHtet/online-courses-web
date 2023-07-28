@@ -12,78 +12,91 @@
         <div class="row">
             <div class="card py-3">
                 @include('backend.layouts.page_info')
-                @if($users->count() !== 0)
-                    <div class="table-responsive text-nowrap" style="min-height: 500px">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Gender</th>
-                                    <th>DOB</th>
-                                    <th>Phone</th>
-                                    <th>Joined Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                    @foreach ($users as $key => $user)
-                                        <tr>
-                                            <td>
-                                                {{ $key + 1 }}
-                                            </td>
-                                            <td>
-                                                {{ $user->name }}
-                                            </td>
-                                            <td>
-                                                {{ $user->email }}
-                                            </td>
-                                            <td>
-                                                {{ $user->gender }}
-                                            </td>
-                                            <td>
-                                                {{ $user->dob }}
-                                            </td>
-                                            <td>
-                                                {{ $user->phone }}
-                                            </td>
-                                            <td>
-                                                {{ $user->created_at->diffForHumans() }}
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu" style="z-index: 100">
-                                                        <a class="dropdown-item" href="{{ route('admin.users.edit', $user->id) }}">
-                                                            <i class="bx bx-edit-alt me-1"></i> 
-                                                            Edit
-                                                        </a>
-                                                        <x-admin.delete-btn :action="route('admin.users.destroy', $user->id)"/>
-                                                        <a class="dropdown-item" href="{{ route('admin.users.details', $user->id) }}">
-                                                            <i class="bx bx-edit-alt me-1"></i> 
-                                                            Edit
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mr-auto mt-5 w-100 d-flex justify-content-end">
-                        {{ $users->links() }}
-                    </div>
-                @else
-                    <div class="alert alert-dark alert-dismissible mb-0 text-danger" role="alert">
-                        No Data Found!
-                    </div>
-                @endif
+                <div class="text-nowrap" style="min-height: 500px">
+                    <table class="table table-hover data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>DOB</th>
+                                <th>Phone</th>
+                                <th>Joined Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {{-- for datatable data --}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
 @endsection
+
+@push('script')
+    <script>
+        $(function () {
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.users.index') }}",
+                columns: [
+                    {
+                        data: 'id',
+                        name: 'id',
+                        render: function (data, type, row, meta) {
+                            var x = meta.row + 1;
+                            return x;
+                        }
+                    },
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'gender', name: 'gender'},
+                    {data: 'dob', name: 'dob'},
+                    {data: 'phone', name: 'phone'},
+                    {
+                        data: 'created_at', 
+                        name: 'created_at', 
+                        render: function (data) {
+                            return moment(data).fromNow();
+                        }
+                    },
+                    {
+                        data: null,
+                        name: 'actions',
+                        searchable: false,
+                        orderable: false,
+                        render: function(data, type, row) {
+                            var editUrl = "{{ route('admin.users.edit', ':id') }}".replace(':id', row.id);
+                            var deleteUrl = "{{ route('admin.users.destroy', ':id') }}".replace(':id', row.id);
+                            var showUrl = "{{ route('admin.users.show', ':id') }}".replace(':id', row.id);
+                            return `
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu" style="z-index: 100">
+                                        <a class="dropdown-item" href="${editUrl}">
+                                            <i class="bx bx-edit-alt me-1"></i> 
+                                            Edit
+                                        </a>
+                                        @component('components.admin.delete-btn', ['action' => '${deleteUrl}'])
+                                        @endcomponent
+                                        <a class="dropdown-item text-info" href="${showUrl}">
+                                            <i class="fa-solid fa-eye me-1"></i> 
+                                            Show
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                        },
+                    },
+                ]
+            });
+        });
+    </script>
+@endpush

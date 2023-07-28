@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('backend/css/demo.css') }}"/>
     <link rel="stylesheet" href="{{ asset('backend/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/vendor/libs/apex-charts/apex-charts.css') }}"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
     <script src="{{ asset('backend/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('backend/js/config.js') }}""></script>
 </head>
@@ -62,6 +63,8 @@
     <script src="{{ asset('backend/js/main.js') }}"></script>
     <script src="{{ asset('backend/js/pages-account-settings-account.js') }}"></script>
     <script src="{{ asset('backend/js/dashboards-analytics.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     @stack('script')

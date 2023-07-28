@@ -12,56 +12,21 @@
         <div class="row">
         <div class="card py-3">
                 @include('backend.layouts.page_info')
-                @if($categories->count() !== 0)
-                    <div class="table-responsive text-nowrap" style="min-height: 500px">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>title</th>
-                                    <th>Created At</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                    @foreach ($categories as $key => $category)
-                                        <tr>
-                                            <td>
-                                                {{ $key + 1 }}
-                                            </td>
-                                            <td>
-                                                {{ $category->title }}
-                                            </td>
-                                            <td>
-                                                {{ $category->created_at }}
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu py-3" style="z-index: 100">
-                                                        <a href="#" class="dropdown-item text-info edit-btn" data-url="{{ route('admin.categories.edit', $category->id) }}">
-                                                            <i class="bx bx-edit-alt me-1"></i>
-                                                            Edit
-                                                        </a>
-                                                        <x-admin.delete-btn :action="route('admin.categories.destroy', $category->id)"/>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mr-auto mt-5 w-100 d-flex justify-content-end">
-                        {{ $categories->links() }}
-                    </div>
-                @else
-                    <div class="alert alert-dark alert-dismissible mb-0 text-danger" role="alert">
-                        No Data Found!
-                    </div>
-                @endif
+                <div class="text-nowrap" style="min-height: 500px">
+                    <table class="table table-hover data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            {{-- for datatables data --}}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -72,6 +37,56 @@
 
 <script>
     $(document).ready(function () {
+
+        var table = $('.data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.categories.index') }}",
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
+                    render: function (data, type, row, meta) {
+                        var x = meta.row + 1;
+                        return x;
+                    }
+                },
+                {data: 'title', name: 'title'},
+                {
+                    data: 'created_at', 
+                    name: 'created_at', 
+                    render: function (data) {
+                        return moment(data).fromNow();
+                    }
+                },
+                {
+                    data: null,
+                    name: 'actions',
+                    searchable: false,
+                    orderable: false,
+                    render: function(data, type, row) {
+                        var editUrl = "{{ route('admin.categories.edit', ':id') }}".replace(':id', row.id);
+                        var deleteUrl = "{{ route('admin.categories.destroy', ':id') }}".replace(':id', row.id);
+                        return `
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu" style="z-index: 100">
+                                    <a href="#" class="dropdown-item text-info edit-btn" data-url="${editUrl}">
+                                        <i class="bx bx-edit-alt me-1"></i>
+                                        Edit
+                                    </a>
+                                    @component('components.admin.delete-btn', ['action' => '${deleteUrl}'])
+                                    @endcomponent
+                                </div>
+                            </div>
+                        `;
+                    },
+                },
+            ]
+        });
+
         $('.create-btn').on('click', function (e) {
             e.preventDefault();
 
@@ -118,7 +133,7 @@
             })
         })
 
-        $('.edit-btn').on('click', function (e) {
+        $(document).on('click', '.edit-btn', function (e) {
             e.preventDefault();
 
             let edit_url = $(this).data('url');
@@ -138,36 +153,45 @@
                         showCancelButton: true,
                         showConfirmButton: true,
                         confirmButtonText: 'Submit',
+                        cancelButtonText: 'No, cancel!',
                         reverseButtons: true,
                     }).then((result) => {
-                        let update_url = `/admin/categories/${res.result.id}`
+                        if (result.isConfirmed){
+                            let update_url = `/admin/categories/${res.result.id}`
+                            $.ajax({
+                                url: update_url,
+                                type: 'PATCH',
+                                data: {
+                                    '_token':  "{{ csrf_token() }}",
+                                    'title': $('.category-input').val()
+                                },
+                                success: function(res){
+                                    Swal.fire('Updated!', res.result, 'success');
 
-                        $.ajax({
-                            url: update_url,
-                            type: 'PATCH',
-                            data: {
-                                '_token':  "{{ csrf_token() }}",
-                                'title': $('.category-input').val()
-                            },
-                            success: function(res){
-                                Swal.fire('Updated!', res.result, 'success');
-
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 1000);
-                            },
-                            error: function(res){
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: "Something wrong",
-                                    text: res.responseJSON.message
-                                });
-                            }
-                        })
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1000);
+                                },
+                                error: function(res){
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: "Something wrong",
+                                        text: res.responseJSON.message
+                                    });
+                                }
+                            })
+                        } else if(result.dismiss){
+                            Swal.fire(
+                                'Cancelled',
+                                'Category is not updated',
+                                'error'
+                            )
+                        }
                     })
                 }
             })
         })
+
     })
 </script>
 

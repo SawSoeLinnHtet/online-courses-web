@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DataTables;
 
 class CategoryController extends Controller
 {
@@ -14,10 +15,17 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::paginate(10);
-        return view('backend.category.index', ['categories' => $categories]);
+        if ($request->ajax()) {
+
+            $data = Category::get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('backend.category.index');
     }
 
     /**
@@ -103,10 +111,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if(Category::find($category->id)){
-            $category->delete();
+        $category->delete();
 
-            return response()->json(['success' => 'Category is deleted']);
-        }
+        return response()->json(['success' => 'Category is deleted']);
     }
 }

@@ -64,9 +64,9 @@
     </div>
 </div>
 <div class="mb-3 row">
-    <label for="dob" class="col-md-2 col-form-label">Date</label>
+    <label for="dob" class="col-md-2 col-form-label">Date Of Birth</label>
     <div class="col-md-10">
-        <input class="form-control" type="date" id="dob" name="dob" value="{{ $admin->dob ?? '' }}"/>
+        <input class="form-control" type="date" id="dob datepicker" name="dob" value="{{ $admin->dob ?? '' }}"/>
     </div>
 </div>
 <div class="row mb-3">

@@ -27,16 +27,18 @@ class AdminRequest extends FormRequest
         if($this->method() == 'PATCH'){
             $id = $request->route('admin')->id;
             return [
-                'name' => 'required|regex:/^[a-zA-Z ]*$/',
+                'name' => 'required',
                 'email' => 'required|email|unique:admins,email,' . $id,
-                'phone' => ['unique:admins,phone,' . $id]
+                'phone' => ['unique:admins,phone,' . $id],
+                'dob' => 'required'
             ];
         }else{
             return [
-                'name' => 'required|regex:/^[a-zA-Z ]*$/',
+                'name' => 'required',
                 'email' => 'required|email|unique:admins,email',
                 'password' => 'required|confirmed|between:8,20|string',
-                'phone' => 'unique:admins,phone'
+                'phone' => 'unique:admins,phone',
+                'dob' => 'required'
             ];
         }
     }

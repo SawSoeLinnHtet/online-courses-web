@@ -48,7 +48,7 @@
                     }else if(result.dismiss === Swal.DismissReason.cancel){
                         swalWithBootstrapButtons.fire(
                             'Cancelled',
-                            'Category is safe :)',
+                            'Data is not deleted',
                             'error'
                         )
                     }

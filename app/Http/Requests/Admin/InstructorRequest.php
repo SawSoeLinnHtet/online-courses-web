@@ -27,16 +27,18 @@ class InstructorRequest extends FormRequest
         if ($this->method() == 'PATCH') {
             $id = $request->route('instructor')->id;
             return [
-                'name' => 'required|regex:/^[a-zA-Z ]*$/',
+                'name' => 'required',
                 'email' => 'required|email|unique:instructors,email,' . $id,
-                'phone' => ['unique:instructors,phone,' . $id]
+                'phone' => ['unique:instructors,phone,' . $id],
+                'dob' => 'required'
             ];
         } else {
             return [
-                'name' => 'required|regex:/^[a-zA-Z ]*$/',
+                'name' => 'required',
                 'email' => 'required|email|unique:instructors,email',
                 'password' => 'required|confirmed|between:8,20|string',
-                'phone' => 'unique:instructors,phone'
+                'phone' => 'unique:instructors,phone',
+                'dob' => 'required'
             ];
         }
     }

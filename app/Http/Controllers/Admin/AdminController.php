@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRequest;
+use DataTables;
 
 class AdminController extends Controller
 {
@@ -13,11 +15,17 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $admins = Admin::paginate(10);
-        
-        return view('backend.admin.index', ['admins' => $admins]);
+        if ($request->ajax()) {
+
+            $data = Admin::get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('backend.admin.index');
     }
 
     /**
@@ -62,12 +70,7 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        $admin = Admin::find($admin->id);
-        if($admin){
-            return view('backend.admin.edit', ['admin' => $admin]);
-        }else{
-            return redirect()->route('admin.admins.index')->with('error', 'Data not match');
-        }
+        return view('backend.admin.edit', ['admin' => $admin]);
     }
 
     /**
@@ -79,11 +82,9 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, Admin $admin)
     {
-        if(Admin::find($admin->id)){
-            $admin->update(['_method', '_token']);
+        $admin->update(['_method', '_token']);
 
-            return redirect()->route('admin.admins.index')->with('success', 'Admin data updated successfully!');
-        }
+        return redirect()->route('admin.admins.index')->with('success', 'Admin data updated successfully!');
     }
 
     /**
@@ -94,10 +95,8 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        if (Admin::find($admin->id)) {
-            $admin->delete();
+        $admin->delete();
 
-            return response()->json(['success' => "Admin'data is deleted."]);
-        }
+        return response()->json(['success' => "Admin'data is deleted."]);
     }
 }

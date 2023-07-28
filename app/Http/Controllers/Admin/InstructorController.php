@@ -6,6 +6,7 @@ use App\Models\Instructor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InstructorRequest;
+use DataTables;
 
 class InstructorController extends Controller
 {
@@ -14,11 +15,17 @@ class InstructorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $instructors = Instructor::paginate(10);
+        if ($request->ajax()) {
 
-        return view('backend.instructor.index', ['instructors' => $instructors]);
+            $data = Instructor::get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('backend.instructor.index');
     }
 
     /**
@@ -75,11 +82,9 @@ class InstructorController extends Controller
      */
     public function update(InstructorRequest $request, Instructor $instructor)
     {
-        if (Instructor::find($instructor->id)) {
-            $instructor->update($request->except(['_token', '_method']));
+        $instructor->update($request->except(['_token', '_method']));
 
-            return redirect()->route('admin.instructors.index')->with('success', 'Instructor data updated successfully!');
-        }
+        return redirect()->route('admin.instructors.index')->with('success', 'Instructor data updated successfully!');
     }
 
     /**
@@ -90,10 +95,8 @@ class InstructorController extends Controller
      */
     public function destroy(Instructor $instructor)
     {
-        if(Instructor::find($instructor->id)){
-            $instructor->delete();
+        $instructor->delete();
 
-            return response()->json(['success' => "Instructor'data is deleted."]);
-        }
+        return response()->json(['success' => "Instructor'data is deleted."]);
     }
 }

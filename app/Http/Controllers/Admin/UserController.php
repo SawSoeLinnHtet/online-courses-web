@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
+use DataTables;
 
 class UserController extends Controller
 {
@@ -14,11 +15,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
+        if ($request->ajax()) {
 
-        return view('backend.user.index', ['users' => $users]);
+            $data = User::get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('backend.user.index');
     }
 
     /**
@@ -63,9 +70,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(User::find($user)){
-            return view('backend.user.edit', ['user' => $user]);
-        }
+        return view('backend.user.edit', ['user' => $user]);
     }   
 
     /**
@@ -77,13 +82,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        if(User::find($user->id)){
-            $user->update($request->except(['_token', '_method']));
+        $user->update($request->except(['_token', '_method']));
 
-            return redirect()->route('admin.users.index')->with('success', "User's data updated successfully!");
-        }
-
-        return redirect()->route('admin.users.index')->with('error', "There have some error");
+        return redirect()->route('admin.users.index')->with('success', "User's data updated successfully!");
     }
 
     /**
