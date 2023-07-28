@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,15 +15,26 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'middleware' => ['guest:admin']
+], function () {
+    Route::get('login', [LoginController::class, 'index'])->name('login.index');
+    Route::post('login', [LoginController::class, 'auth'])->name('login.auth');
+    Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->name('forgot-password.index');
+    Route::post('forgot-password', [ForgotPasswordController::class, 'sendEmail'])->name('forgot-password.send');
+    Route::get('reset-password', [ResetPasswordController::class, 'index'])->name('reset-password.index');
+    Route::post('reset-password/reset', [ResetPasswordController::class, 'reset'])->name('reset-password.reset');
 });
+
+Route::post('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
 Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
-    'namespace' => 'App\Http\Controllers\Admin'
+    'namespace' => 'App\Http\Controllers\Admin',
+    'middleware' => 'auth.admin'
 ], function () {
     Route::get('/dashboard', function () {
         return view('backend.dashboard.index');
