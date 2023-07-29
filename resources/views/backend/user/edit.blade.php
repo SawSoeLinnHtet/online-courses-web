@@ -13,7 +13,7 @@
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                        <form action="{{ route('admin.users.update', $user->id) }}" id="user-edit-form" method="POST">
                             @csrf
                             @method('PATCH')
                             @include('backend.user.partials._form', ['disable' => true])
@@ -31,3 +31,7 @@
     </div>
 
 @endsection
+
+@push('script')
+    {!! JsValidator::formRequest('App\Http\Requests\Admin\UserRequest', '#user-edit-form') !!}
+@endpush

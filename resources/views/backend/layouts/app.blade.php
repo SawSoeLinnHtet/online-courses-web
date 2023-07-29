@@ -76,6 +76,7 @@
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="{{ asset('backend/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('backend/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('backend/vendor/js/bootstrap.js') }}"></script>

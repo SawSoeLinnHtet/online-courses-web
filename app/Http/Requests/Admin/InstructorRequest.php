@@ -26,6 +26,7 @@ class InstructorRequest extends FormRequest
     {
         if ($this->method() == 'PATCH') {
             $id = $request->route('instructor')->id;
+            
             return [
                 'name' => 'required',
                 'email' => 'required|email|unique:instructors,email,' . $id,

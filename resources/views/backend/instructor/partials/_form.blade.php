@@ -81,7 +81,3 @@
         <textarea class="form-control" id="address" rows="5" name="address">{{ $instructor->address ?? '' }}</textarea>
     </div>
 </div>
-
-@push('script')
-    {!! JsValidator::formRequest('App\Http\Requests\Admin\InstructorRequest') !!}
-@endpush

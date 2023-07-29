@@ -13,7 +13,7 @@
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.instructors.update', $instructor->id) }}" method="POST">
+                        <form action="{{ route('admin.instructors.update', $instructor->id) }}" id="instructor-edit-form" method="POST">
                             @csrf
                             @method('PATCH')
                             @include('backend.instructor.partials._form', ['disable' => true])
@@ -31,3 +31,7 @@
     </div>
 
 @endsection
+
+@push('script')
+    {!! JsValidator::formRequest('App\Http\Requests\Admin\InstructorRequest', '#instructor-edit-form') !!}
+@endpush

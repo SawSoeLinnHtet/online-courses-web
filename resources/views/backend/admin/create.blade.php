@@ -7,13 +7,13 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4">
                     <a href="{{ route('admin.admins.index') }}" class="text-muted fw-light">Admin /</a> 
-                    Details
+                    Create
                 </h4>
             </div>
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.admins.store') }}" method="POST">
+                        <form action="{{ route('admin.admins.store') }}" id="admin-create-form" method="POST">
                             @csrf
                             @include('backend.admin.partials._form', ['disable' => false])
                             <div class="row justify-content-end">
@@ -30,3 +30,7 @@
     </div>
 
 @endsection
+
+@push('script')
+    {!! JsValidator::formRequest('App\Http\Requests\Admin\AdminRequest', '#admin-create-form') !!}
+@endpush

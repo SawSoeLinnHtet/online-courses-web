@@ -13,7 +13,7 @@
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.users.store') }}" method="POST">
+                        <form action="{{ route('admin.users.store') }}" id="user-create-form" method="POST">
                             @csrf
                             @include('backend.user.partials._form', ['disable' => false])
                             <div class="row justify-content-end">
@@ -30,3 +30,7 @@
     </div>
 
 @endsection
+
+@push('script')
+    {!! JsValidator::formRequest('App\Http\Requests\Admin\UserRequest', '#user-create-form') !!}
+@endpush

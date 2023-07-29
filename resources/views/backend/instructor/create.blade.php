@@ -13,7 +13,7 @@
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.instructors.store') }}" method="POST">
+                        <form action="{{ route('admin.instructors.store') }}" id="instructor-create-form" method="POST">
                             @csrf
                             @include('backend.instructor.partials._form', ['disable' => false])
                             <div class="row justify-content-end">
@@ -30,3 +30,7 @@
     </div>
 
 @endsection
+
+@push('script')
+    {!! JsValidator::formRequest('App\Http\Requests\Admin\InstructorRequest', '#instructor-create-form') !!}
+@endpush

@@ -6,14 +6,14 @@
         <div class="d-flex justify-content-between align-items-center">
             <h4 class="fw-bold py-3 mb-4">
                 <a href="{{ route('admin.admins.index') }}" class="text-muted fw-light">Admin /</a> 
-                Create
+                Edit
             </h4>
         </div>
         <div class="row">
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.admins.update', $admin->id) }}" method="POST">
+                        <form action="{{ route('admin.admins.update', $admin->id) }}" id="admin-edit-form" method="POST">
                             @csrf
                             @method('PATCH')
                             @include('backend.admin.partials._form', ['disable' => true])
@@ -31,3 +31,7 @@
     </div>
 
 @endsection
+
+@push('script')
+    {!! JsValidator::formRequest('App\Http\Requests\Admin\AdminRequest', '#admin-edit-form') !!}
+@endpush
