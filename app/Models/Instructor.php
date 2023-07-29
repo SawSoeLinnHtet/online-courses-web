@@ -28,4 +28,9 @@ class Instructor extends Model
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function Course()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

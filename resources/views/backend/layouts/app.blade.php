@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
     <script src="{{ asset('backend/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('backend/js/config.js') }}""></script>
+    <script src="https://cdn.tiny.cloud/1/6owr8nxtg28jo1vipujg40cp92r3k3o1ozbrsw1topjzwxht/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -80,19 +82,56 @@
     <script src="{{ asset('backend/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('backend/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('backend/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <script src="{{ asset('backend/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="{{ asset('backend/vendor/js/menu.js') }}"></script>
     <script src="{{ asset('backend/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
-    <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <script src="{{ asset('backend/js/main.js') }}"></script>
     <script src="{{ asset('backend/js/pages-account-settings-account.js') }}"></script>
     <script src="{{ asset('backend/js/dashboards-analytics.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-
+     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+    
     @stack('script')
+
+    <script>
+        function openFilePicker(callback) {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function () {
+                var file = input.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    callback(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+        tinymce.init({
+            selector: '#summary',
+            plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            image_caption: true,
+            file_picker_types: 'image',
+            file_picker_callback: function(callback, value, meta) {
+                openFilePicker(function (dataUrl) {
+                    callback(dataUrl);
+                });
+            }
+        });
+    </script>
 </body>
 </html>

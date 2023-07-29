@@ -43,4 +43,5 @@ Route::group([
     Route::resource('users', UserController::class);
     Route::resource('instructors', InstructorController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('courses', CourseController::class);
 });
