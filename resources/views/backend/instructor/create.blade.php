@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <form action="{{ route('admin.instructors.store') }}" id="instructor-create-form" method="POST">
                             @csrf
-                            @include('backend.instructor.partials._form', ['disable' => false])
+                            @include('backend.instructor.partials.create-form', ['disable' => false])
                             <div class="row justify-content-end">
                                 <div class="col-sm-10 d-flex justify-content-end">
                                     <a href="{{ route('admin.instructors.index') }}" class="btn btn-secondary me-3">Cancel</a>

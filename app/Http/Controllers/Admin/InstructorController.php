@@ -46,8 +46,20 @@ class InstructorController extends Controller
      */
     public function store(InstructorRequest $request)
     {
-        Instructor::create($request->except('_token'));
-
+        $instructor = Instructor::create(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'phone' => $request->phone,
+                'bio' => $request->bio,
+                'address' => $request->address,
+                'links' => json_encode($request->links),
+            ]
+        );
+        
         return redirect()->route('admin.instructors.index')->with('success', 'Instructor created successfully!');
     }
 
@@ -82,7 +94,17 @@ class InstructorController extends Controller
      */
     public function update(InstructorRequest $request, Instructor $instructor)
     {
-        $instructor->update($request->except(['_token', '_method']));
+        $instructor->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'gender' => $request->gender,
+            'dob' => $request->dob,
+            'phone' => $request->phone,
+            'bio' => $request->bio,
+            'address' => $request->address,
+            'links' => json_encode($request->links),
+        ]);
 
         return redirect()->route('admin.instructors.index')->with('success', 'Instructor data updated successfully!');
     }

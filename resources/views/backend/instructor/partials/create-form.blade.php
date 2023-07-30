@@ -1,13 +1,13 @@
 <div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="name">Name</label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="name" name="name" value="{{ $instructor->name ?? '' }}"/>
+        <input class="form-control" type="text" id="name" name="name" value=""/>
     </div>
 </div>
 <div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="email">Email</label>
     <div class="col-sm-10">
-        <input class="form-control" type="email" id="email" name="email" value="{{ $instructor->email ?? '' }}"/>
+        <input class="form-control" type="email" id="email" name="email" value=""/>
         <p class="form-text d-flex justify-content-end text-warning">You can use letters, numbers & periods</p>
     </div>
 </div>
@@ -35,7 +35,6 @@
                 type="radio"
                 value="male"
                 id="male"
-                {{ $instructor->gender ?? '' }}
             />
             <label class="form-check-label" for="male"> Male</label>
         </div>
@@ -46,7 +45,6 @@
                 type="radio"
                 value="female"
                 id="female"
-                {{ $instructor->gender ?? '' }}
             />
             <label class="form-check-label" for="female"> Female </label>
         </div>
@@ -57,7 +55,6 @@
                 type="radio"
                 value="other"
                 id="other"
-                {{ $instructor->gender ?? '' }}
             />
             <label class="form-check-label" for="other"> Other </label>
         </div>
@@ -66,25 +63,25 @@
 <div class="mb-3 row">
     <label for="dob" class="col-md-2 col-form-label">Date Of Birth</label>
     <div class="col-md-10">
-        <input class="form-control" type="date" id="dob" name="dob" value="{{ $instructor->dob ?? '' }}"/>
+        <input class="form-control" type="date" id="dob" name="dob" value=""/>
     </div>
 </div>
 <div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="phone">Phone No</label>
     <div class="col-sm-10">
-        <input class="form-control" type="text" id="phone" name="phone" value="{{ $instructor->phone ?? '' }}"/>
+        <input class="form-control" type="text" id="phone" name="phone" value=""/>
     </div>
 </div>
 <div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="bio">Bio</label>
     <div class="col-sm-10">
-        <textarea class="form-control" id="bio" rows="5" name="bio">{{ $instructor->bio ?? '' }}</textarea>
+        <textarea class="form-control" id="bio" rows="5" name="bio"></textarea>
     </div>
 </div>
 <div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="address">Address</label>
     <div class="col-sm-10">
-        <textarea class="form-control" id="address" rows="5" name="address">{{ $instructor->address ?? '' }}</textarea>
+        <textarea class="form-control" id="address" rows="5" name="address"></textarea>
     </div>
 </div>
 <div class="row mb-5">
@@ -95,57 +92,32 @@
                 <i class="fa-solid fa-plus me-1"></i>Add Row
             </a>
         </div>
-        @if(is_null($instructor->links))
-            <div class="row link-row">
-                <div class="col">
-                    <label class="col-form-label me-2" for="address">Icon</label>
-                    <input class="form-control" type="text" id="icon" name="links[0]['icon']" value=""/>
-                </div>
-                <div class="col">
-                    <label class="col-form-label me-2" for="address">Link</label>
-                    <input class="form-control" type="text" id="link" name="links[0]['link']" value=""/>
-                </div>
-                <div class="col">
-                    <label class="col-form-label me-2" for="address">Label</label>
-                    <input class="form-control" type="text" id="label" name="links[0]['label']" value=""/>
-                </div>
-                <div class="col-1">
-                    <label class="col-form-label me-2" for="address">Action</label>
-                    <a class="btn btn-danger btn-sm del-row text-white py-2">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </div>
+        <div class="row link-row">
+            <div class="col">
+                <label class="col-sm-2 col-form-label me-2" for="address">Icon</label>
+                <input class="form-control" type="text" id="icon" name="links[0]['icon']" value=""/>
             </div>
-        @else
-            @foreach (json_decode($instructor->links, true) as $key => $link)
-                <div class="row link-row">
-                    <div class="col">
-                        <label class="col-form-label me-2" for="address">Icon</label>
-                        <input class="form-control" type="text" id="icon" name="links[{{ $key }}]['icon']" value="{{ $link["'icon'"] }}"/>
-                    </div>
-                    <div class="col">
-                        <label class="col-form-label me-2" for="address">Link</label>
-                        <input class="form-control" type="text" id="link" name="links[{{ $key }}]['link']" value="{{ $link["'link'"] }}"/>
-                    </div>
-                    <div class="col">
-                        <label class="col-form-label me-2" for="address">Label</label>
-                        <input class="form-control" type="text" id="label" name="links[{{ $key }}]['label']" value="{{ $link["'label'"] }}"/>
-                    </div>
-                    <div class="col-1">
-                        <label class="col-form-label me-2" for="address">Action</label>
-                        <a class="btn btn-danger btn-sm del-row text-white py-2">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-            @endforeach
-        @endif
+            <div class="col">
+                <label class="col-sm-2 col-form-label me-2" for="address">Link</label>
+                <input class="form-control" type="text" id="link" name="links[0]['link']" value=""/>
+            </div>
+            <div class="col">
+                <label class="col-sm-2 col-form-label me-2" for="address">Label</label>
+                <input class="form-control" type="text" id="label" name="links[0]['label']" value=""/>
+            </div>
+            <div class="col-1">
+                <label class="col-form-label me-2" for="address">Action</label>
+                <a class="btn btn-danger btn-sm del-row text-white py-2">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
 @push('script')
     <script>
-        var row_count = {{ !is_null($instructor->links) ? count(json_decode($instructor->links, true)) - 1 : 0 }};
+        var row_count = 0;
 
         $('.add-row').on('click', function () {
             row_count++

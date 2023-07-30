@@ -19,7 +19,7 @@ class Instructor extends Model
         'profile',
         'gender',
         'bio',
-        'link'
+        'links'
     ];
 
     protected $hidden = [
@@ -30,6 +30,11 @@ class Instructor extends Model
     {
         $this->attributes['password'] = bcrypt($value);
     }
+    
+    // public function setLinkToJsonAttribute($value)
+    // {
+    //    $this->attributes['links'] = json_decode($value);
+    // }
 
     public function Course()
     {
