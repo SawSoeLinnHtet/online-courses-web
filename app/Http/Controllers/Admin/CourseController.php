@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Admin\CourseRequest;
+use Carbon\Carbon;
 
 class CourseController extends Controller
 {
@@ -58,12 +59,7 @@ class CourseController extends Controller
     {
         $course = Course::create($request->except('_token'));
 
-        foreach($request->category_ids as $id){
-            CategoryCourse::create([
-                'category_id' => $id,
-                'course_id' => $course->id
-            ]);
-        }
+        $course->attach($request->category_ids);
 
         return redirect()->route('admin.courses.index')->with('success', 'Course created successfully');
     }
@@ -109,11 +105,8 @@ class CourseController extends Controller
     {
         $course->update($request->except(['_token', '_method']));
 
-        CategoryCourse::where('course_id', $course->id)->delete();
-
-        foreach($request->category_ids as $id){
-            CategoryCourse::create(['category_id' => $id, 'course_id' => $course->id,]);
-        }
+        $course->Category()->sync($request->category_ids);
+        // attach use in insert bcz attach not check unique 
 
         return redirect()->route('admin.courses.index')->with('success', 'Course Updated Successfully');
     }

@@ -120,8 +120,7 @@
             var new_row = $('#link-row-wrap').children('.link-row').clone();
             console.log(new_row);
             new_row.find("input").val('')
-            new_row.find("input")
-
+            
             $('#link-row-wrap').append(new_row);
         })
     </script>
