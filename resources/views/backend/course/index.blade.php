@@ -3,23 +3,23 @@
 @section('content')
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 class="fw-bold py-3 mb-4">
-                Courses
-            </h4>
-            <a href="{{ route('admin.courses.create') }}" class="btn btn-primary btn-md mb-3 d-flex align-items-center"><i class="fa-solid fa-square-plus me-2"></i>Create New</a>
-        </div>
-        <div class="row">
+        <div class="row px-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold py-3 mb-4">
+                    Courses
+                </h4>
+                <a href="{{ route('admin.courses.create') }}" class="btn btn-primary btn-md mb-3 d-flex align-items-center"><i class="fa-solid fa-square-plus me-2"></i>Create New</a>
+            </div>
             <div class="card py-3">
                 @include('backend.layouts.page_info')
-                <div class="text-nowrap" style="min-height: 500px">
+                <div class="text-nowrap table-responsive pb-3" style="min-height: 500px">
                     <table class="table table-hover data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Instructor</th>
-                                <th>Category</th>
+                                <th style="max-width: 200px">Category</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -53,7 +53,7 @@
                     },
                     {data: 'title', name: 'title'},
                     {data: 'instructor.name', name: 'instructor.name'},
-                    {data: 'category.title', name: 'category.title'},
+                    {data: 'categories', name: 'categories'},
                     {
                         data: 'created_at', 
                         name: 'created_at', 

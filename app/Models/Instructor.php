@@ -17,7 +17,9 @@ class Instructor extends Model
         'address',
         'phone',
         'profile',
-        'gender'
+        'gender',
+        'bio',
+        'link'
     ];
 
     protected $hidden = [

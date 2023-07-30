@@ -17,10 +17,11 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->string('title');
             $table->foreignId('instructor_id');
-            $table->foreignId('category_id');
             $table->text('description');
             $table->longText('summary');
             $table->timestamps();
+
+            $table->foreign('instructor_id')->references('id')->on('instructors')->onDelete('cascade');
         });
     }
 

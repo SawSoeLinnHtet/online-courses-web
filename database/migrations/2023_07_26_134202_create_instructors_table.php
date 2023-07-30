@@ -22,7 +22,9 @@ class CreateInstructorsTable extends Migration
             $table->date('dob')->nullable();
             $table->string('gender')->default('male');
             $table->text('address')->nullable();
+            $table->text('bio')->nullable();
             $table->string('profile')->nullable();
+            $table->longText('links')->nullable();
             $table->timestamps();
         });
     }

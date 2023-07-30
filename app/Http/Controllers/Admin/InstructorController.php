@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Admin\InstructorRequest;
-use DataTables;
 
 class InstructorController extends Controller
 {
@@ -21,7 +21,7 @@ class InstructorController extends Controller
 
             $data = Instructor::get();
 
-            return Datatables::of($data)
+            return DataTables::of($data)
                 ->addIndexColumn()
                 ->make(true);
         }

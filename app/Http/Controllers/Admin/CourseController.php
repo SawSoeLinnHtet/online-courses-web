@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CourseRequest;
-use App\Models\Category;
 use App\Models\Course;
+use App\Models\Category;
 use App\Models\Instructor;
-use DataTables;
+use Illuminate\Http\Request;
+use App\Models\CategoryCourse;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Admin\CourseRequest;
 
 class CourseController extends Controller
 {
@@ -20,11 +22,14 @@ class CourseController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            $data = Course::with(['Instructor:id,name', 'Category:id,title'])->latest()->get();
 
-            $data = Course::with(['Instructor:id,name', 'Category:id,title'])->get();
-
-            return Datatables::of($data)
+            return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('categories', function ($row) {
+                    return view('backend.course.partials.category-badge', ['categories' => $row->Category])->render();
+                })
+                ->rawColumns(['categories'])
                 ->make(true);
         }
         return view('backend.course.index');
@@ -53,6 +58,13 @@ class CourseController extends Controller
     {
         $course = Course::create($request->except('_token'));
 
+        foreach($request->category_ids as $id){
+            CategoryCourse::create([
+                'category_id' => $id,
+                'course_id' => $course->id
+            ]);
+        }
+
         return redirect()->route('admin.courses.index')->with('success', 'Course created successfully');
     }
 
@@ -80,7 +92,10 @@ class CourseController extends Controller
         $categories = $category->select('id', 'title')->get();
         $instructors = $instructor->select('id', 'name')->get();
 
-        return view('backend.course.edit', ['categories' => $categories, 'instructors' => $instructors, 'course' => $course]);
+        $data =  $course->where('id', $course->id)->with('Category:id')->first();
+        $category_ids = CategoryCourse::where('course_id', $course->id)->pluck('category_id', 'category_id')->toArray();
+        
+        return view('backend.course.edit', ['categories' => $categories, 'instructors' => $instructors, 'course' => $data, 'category_ids' => $category_ids]);
     }
 
     /**
@@ -93,6 +108,12 @@ class CourseController extends Controller
     public function update(CourseRequest $request, Course $course)
     {
         $course->update($request->except(['_token', '_method']));
+
+        CategoryCourse::where('course_id', $course->id)->delete();
+
+        foreach($request->category_ids as $id){
+            CategoryCourse::create(['category_id' => $id, 'course_id' => $course->id,]);
+        }
 
         return redirect()->route('admin.courses.index')->with('success', 'Course Updated Successfully');
     }

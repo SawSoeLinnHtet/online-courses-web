@@ -10,20 +10,18 @@
                     Create
                 </h4>
             </div>
-            <div class="col-xxl">
-                <div class="card bg-light mb-4">
-                    <div class="card-body">
-                        <form action="{{ route('admin.admins.store') }}" id="admin-create-form" method="POST">
-                            @csrf
-                            @include('backend.admin.partials._form', ['disable' => false])
-                            <div class="row justify-content-end">
-                                <div class="col-sm-10 d-flex justify-content-end">
-                                    <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary me-3">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                                </div>
+            <div class="card bg-light mb-4">
+                <div class="card-body">
+                    <form action="{{ route('admin.admins.store') }}" id="admin-create-form" method="POST">
+                        @csrf
+                        @include('backend.admin.partials._form', ['disable' => false])
+                        <div class="row justify-content-end">
+                            <div class="col-sm-10 d-flex justify-content-end">
+                                <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary me-3">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Send</button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

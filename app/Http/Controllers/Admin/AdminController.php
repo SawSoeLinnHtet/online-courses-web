@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Admin\AdminRequest;
-use DataTables;
 
 class AdminController extends Controller
 {
@@ -21,7 +21,7 @@ class AdminController extends Controller
 
             $data = Admin::get();
 
-            return Datatables::of($data)
+            return DataTables::of($data)
                 ->addIndexColumn()
                 ->make(true);
         }

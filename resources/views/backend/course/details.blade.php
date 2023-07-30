@@ -10,7 +10,6 @@
                 </h4>
             </div>
             <div class="card mb-4">
-    
                 <div class="card-body">
                     <div class="row">
                         <div class="mb-3 col-md-12 border-bottom">
@@ -26,10 +25,10 @@
                             </h6>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="firstName" class="form-label text-dark">Phone Number</label>
-                            <h6 style="text-transform: capitalize">
-                                {{ $course->Category->title }}
-                            </h6>
+                            <label for="firstName" class="form-label text-dark">Category Name</label>
+                            <div>
+                                @include('backend.course.partials.category-badge', ['categories' => $course->Category])
+                            </div>
                         </div>
                         <hr/>
                         <div class="mb-3 col-md-12 border-bottom">

@@ -16,7 +16,6 @@ class CourseFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'instructor_id' => $this->faker->randomNumber(1, 10),
-            'category_id' => $this->faker->randomNumber(1, 10),
             'description' => $this->faker->paragraph(),
             'summary' => $this->faker->paragraphs(2, true)
         ];

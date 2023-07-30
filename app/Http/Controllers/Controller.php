@@ -11,14 +11,4 @@ use Illuminate\Support\Facades\Auth;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function getAuthUser(string $guard = 'web')
-    {
-        return Auth::guard($guard)->user();
-    }
-
-    public function checkRolePermission(string $permission, string $guard = 'web')
-    {
-        abort_if(!$this->getAuthUser($guard)->can($permission), 403);
-    }
 }
