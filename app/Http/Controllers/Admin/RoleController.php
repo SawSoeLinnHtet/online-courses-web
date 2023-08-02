@@ -18,12 +18,17 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $this->checkRolePermission('view-role');
+
         if ($request->ajax()) {
 
-            $data = Role::get();
+            $data = Role::with('Permissions')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('permissions', function ($row) {
+                    return view('backend.role.partials.permission-badge', ['permissions' => $row->Permissions])->render();
+                })
+                ->rawColumns(['permissions'])
                 ->make(true);
         }
         return view('backend.role.index');
@@ -83,9 +88,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
         $this->checkRolePermission('edit-role');
+
+        $permissions = Permission::toBase()->get()->pluck('name', 'id')->toArray();
+
+        $data = Role::where('id', $role->id)->with('permissions')->first();
+        $permission_ids = $data->permissions->pluck('id', 'id')->toArray();
+
+        return view('backend.role.edit', ['role' => $data, 'permission_ids' => $permission_ids, 'permissions' => $permissions]);
     }
 
     /**
@@ -95,11 +107,21 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        $this->checkRolePermission('edit-role');
+        $attributes = $request->validate([
+            'name' => 'required|unique:roles,name,'.$role->id,
+            'permission' => 'required|array'
+        ]);
 
-        
+        $role->update([
+            'name' => $attributes['name'],
+            'guard_name' => 'admin'
+        ]);
+
+        $role->syncPermissions($attributes['permission']);
+
+        return redirect()->route('admin.roles.index')->with('success', 'Role has been updated');
     }
 
     /**

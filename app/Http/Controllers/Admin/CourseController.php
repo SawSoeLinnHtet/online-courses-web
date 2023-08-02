@@ -76,7 +76,6 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         $this->checkRolePermission('view-course');
-        $this->checkRolePermission('view-course');
         $course = $course->where('id', $course->id)->with(['Instructor:id,name', 'Category:id,title'])->first();
 
         return view('backend.course.details', ['course' => $course]);
@@ -94,10 +93,9 @@ class CourseController extends Controller
         $categories = $category->select('id', 'title')->get();
         $instructors = $instructor->select('id', 'name')->get();
 
-        $data =  $course->where('id', $course->id)->with('Category:id')->first();
         $category_ids = CategoryCourse::where('course_id', $course->id)->pluck('category_id', 'category_id')->toArray();
         
-        return view('backend.course.edit', ['categories' => $categories, 'instructors' => $instructors, 'course' => $data, 'category_ids' => $category_ids]);
+        return view('backend.course.edit', ['categories' => $categories, 'instructors' => $instructors, 'course' => $course, 'category_ids' => $category_ids]);
     }
 
     /**

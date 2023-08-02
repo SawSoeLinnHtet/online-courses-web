@@ -6,19 +6,19 @@
         <div class="row px-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4">
-                    <a href="{{ route('admin.admins.index') }}" class="text-muted fw-light">Admin /</a> 
+                    <a href="{{ route('admin.roles.index') }}" class="text-muted fw-light">Roles /</a> 
                     Edit
                 </h4>
             </div>
             <div class="card bg-light mb-4">
                 <div class="card-body">
-                    <form action="{{ route('admin.admins.update', $admin->id) }}" id="admin-edit-form" method="POST">
+                    <form action="{{ route('admin.roles.update', $role->id) }}" id="admin-edit-form" method="POST">
                         @csrf
                         @method('PATCH')
-                        @include('backend.admin.partials._form', ['disable' => true])
+                        @include('backend.role.partials._form', ['disable' => true, 'permissions' => $permissions])
                         <div class="row justify-content-end">
                             <div class="col-sm-10 d-flex justify-content-end">
-                                <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary me-3">Cancel</a>
+                                <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary me-3">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Send</button>
                             </div>
                         </div>

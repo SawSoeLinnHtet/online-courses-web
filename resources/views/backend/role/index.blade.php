@@ -17,8 +17,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Permission Name</th>
-                                <th>Giura</th>
+                                <th>Role Name</th>
+                                <th>Permission</th>
                                 <th>Joined Date</th>
                                 <th>Actions</th>
                             </tr>
@@ -35,7 +35,7 @@
 @endsection
 
 @push('script')
-    {{-- <script>
+    <script>
         $(function () {
             var table = $('.data-table').DataTable({
                 processing: true,
@@ -51,10 +51,7 @@
                         }
                     },
                     {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
-                    {data: 'gender', name: 'gender'},
-                    {data: 'dob', name: 'dob'},
-                    {data: 'phone', name: 'phone'},
+                    {data: 'permissions', name: 'permissions'},
                     {
                         data: 'created_at', 
                         name: 'created_at', 
@@ -68,9 +65,9 @@
                         searchable: false,
                         orderable: false,
                         render: function(data, type, row) {
-                            var editUrl = "{{ route('admin.admins.edit', ':id') }}".replace(':id', row.id);
-                            var deleteUrl = "{{ route('admin.admins.destroy', ':id') }}".replace(':id', row.id);
-                            var showUrl = "{{ route('admin.admins.show', ':id') }}".replace(':id', row.id);
+                            var editUrl = "{{ route('admin.roles.edit', ':id') }}".replace(':id', row.id);
+                            var deleteUrl = "{{ route('admin.roles.destroy', ':id') }}".replace(':id', row.id);
+                            // var showUrl = "{{ route('admin.roles.show', ':id') }}".replace(':id', row.id);
                             return `
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -83,10 +80,6 @@
                                         </a>
                                         @component('components.admin.delete-btn', ['action' => '${deleteUrl}'])
                                         @endcomponent
-                                        <a class="dropdown-item text-info" href="${showUrl}">
-                                            <i class="fa-solid fa-eye me-1"></i> 
-                                            Show
-                                        </a>
                                     </div>
                                 </div>
                             `;
@@ -95,5 +88,5 @@
                 ]
             });
         });
-    </script> --}}
+    </script>
 @endpush

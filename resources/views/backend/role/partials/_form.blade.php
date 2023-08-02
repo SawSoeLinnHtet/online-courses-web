@@ -1,7 +1,7 @@
 <div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="name">Name</label>
     <div class="col-sm-10">
-        <input class="form-control text-dark" type="name" id="name" name="name"/>
+        <input class="form-control text-dark" type="name" id="name" name="name" value="{{ $role->name }}"/>
     </div>
 </div>
 <div class="row mb-3">
@@ -10,7 +10,7 @@
         <select class="form-select category_select text-dark" id="category" name="permission[]" aria-label="Select Category Name" multiple>
             <option value="">Select Permission Name</option>
             @foreach ($permissions as $key=>$permission)
-                <option value="{{ $key }}">{{ $permission }}</option>
+                <option value="{{ $key }}" @if(!is_null($permission_ids ?? null)) {{ array_key_exists($key, $permission_ids) ? 'selected' : ''  }}@endif>{{ $permission }}</option>
             @endforeach
         </select>
     </div>
