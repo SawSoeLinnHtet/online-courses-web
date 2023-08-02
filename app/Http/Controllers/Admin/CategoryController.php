@@ -17,6 +17,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->checkRolePermission('view-category');
         if ($request->ajax()) {
 
             $data = Category::get();
@@ -46,6 +47,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->checkRolePermission('create-category');
         $data = $request->validate([
             'title' => 'required',
         ]);
@@ -78,6 +80,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        $this->checkRolePermission('edit-category');
         return response()->json(['result' => $category]);
     }
 
@@ -90,6 +93,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $this->checkRolePermission('edit-category');
         $data = $request->validate([
             'title' => 'required',
         ]);
@@ -111,6 +115,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $this->checkRolePermission('delete-category');
         $category->delete();
 
         return response()->json(['success' => 'Category is deleted']);

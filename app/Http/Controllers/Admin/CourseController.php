@@ -22,6 +22,7 @@ class CourseController extends Controller
      */
     public function index(Request $request)
     {
+        $this->checkRolePermission('view-course');
         if ($request->ajax()) {
             $data = Course::with(['Instructor:id,name', 'Category:id,title'])->latest()->get();
 
@@ -43,6 +44,7 @@ class CourseController extends Controller
      */
     public function create(Category $category, Instructor $instructor)
     {
+        $this->checkRolePermission('create-course');
         $categories = $category->select('id', 'title')->get();
         $instructors = $instructor->select('id', 'name')->get();
 
@@ -57,9 +59,10 @@ class CourseController extends Controller
      */
     public function store(CourseRequest $request)
     {
+        $this->checkRolePermission('create-course');
         $course = Course::create($request->except('_token'));
 
-        $course->attach($request->category_ids);
+        $course->Category()->attach($request->category_ids);
 
         return redirect()->route('admin.courses.index')->with('success', 'Course created successfully');
     }
@@ -72,6 +75,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        $this->checkRolePermission('view-course');
+        $this->checkRolePermission('view-course');
         $course = $course->where('id', $course->id)->with(['Instructor:id,name', 'Category:id,title'])->first();
 
         return view('backend.course.details', ['course' => $course]);
@@ -85,6 +90,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course, Category $category, Instructor $instructor)
     {
+        $this->checkRolePermission('edit-course');
         $categories = $category->select('id', 'title')->get();
         $instructors = $instructor->select('id', 'name')->get();
 
@@ -103,6 +109,7 @@ class CourseController extends Controller
      */
     public function update(CourseRequest $request, Course $course)
     {
+        $this->checkRolePermission('edit-course');
         $course->update($request->except(['_token', '_method']));
 
         $course->Category()->sync($request->category_ids);
@@ -119,6 +126,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        $this->checkRolePermission('delete-course');
         $course->delete();
 
         return response()->json(['success' => 'Course deleted successfully']);

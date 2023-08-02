@@ -18,10 +18,13 @@ class DatabaseSeeder extends Seeder
         \App\Models\Instructor::factory(10)->create();
         \App\Models\Category::factory(10)->create();
         \App\Models\Course::factory(20)->create();
-        
+    
+        $this->call(
+            PermissionSeeder::class
+        );
 
         $this->call(
-            AdminSeeder::class
+            SuperAdminSeeder::class
         );
     }
 }

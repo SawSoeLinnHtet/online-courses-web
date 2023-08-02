@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\Admin\AdminRequest;
 
-class AdminController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,16 +17,16 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $this->checkRolePermission('view-admin');
+        $this->checkRolePermission('view-role');
         if ($request->ajax()) {
 
-            $data = Admin::get();
+            $data = Role::get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('backend.admin.index');
+        return view('backend.role.index');
     }
 
     /**
@@ -36,8 +36,10 @@ class AdminController extends Controller
      */
     public function create()
     {
-        $this->checkRolePermission('create-admin');
-        return view('backend.admin.create');
+        $this->checkRolePermission('create-role');
+        $permissions = Permission::toBase()->get()->pluck('name', 'id')->toArray();
+
+        return view('backend.role.create', ['permissions' => $permissions]);
     }
 
     /**
@@ -46,12 +48,22 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminRequest $request)
+    public function store(Request $request)
     {
-        $this->checkRolePermission('create-admin');
-        Admin::create($request->except('_token'));
+        $this->checkRolePermission('create-role');
+        $attributes = $request->validate([
+            'name' => 'required|unique:roles,name',
+            'permission' => 'required|array'
+        ]);
 
-        return redirect()->route('admin.admins.index')->with('success', 'Admins created successfully!');
+        $role = Role::create([
+            'name' => $attributes['name'],
+            'guard_name' => 'admin'
+        ]);
+
+        $role->syncPermissions($attributes['permission']);
+
+        return redirect()->route('admin.roles.index')->with('success', 'Role has been created successfully');
     }
 
     /**
@@ -60,10 +72,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin)
+    public function show($id)
     {
-        $this->checkRolePermission('view-admin');
-        return view('backend.admin.details', ['admin' => $admin]);
+        $this->checkRolePermission('view-role');
     }
 
     /**
@@ -72,10 +83,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Admin $admin)
+    public function edit($id)
     {
-        $this->checkRolePermission('edit-admin');
-        return view('backend.admin.edit', ['admin' => $admin]);
+        $this->checkRolePermission('edit-role');
     }
 
     /**
@@ -85,12 +95,11 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminRequest $request, Admin $admin)
+    public function update(Request $request, $id)
     {
-        $this->checkRolePermission('edit-admin');
-        $admin->update(['_method', '_token']);
+        $this->checkRolePermission('edit-role');
 
-        return redirect()->route('admin.admins.index')->with('success', 'Admin data updated successfully!');
+        
     }
 
     /**
@@ -99,11 +108,8 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
-        $this->checkRolePermission('delete-admin');
-        $admin->delete();
-
-        return response()->json(['success' => "Admin'data is deleted."]);
+        $this->checkRolePermission('delete-role');
     }
 }

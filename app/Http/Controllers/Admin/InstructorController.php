@@ -17,6 +17,7 @@ class InstructorController extends Controller
      */
     public function index(Request $request)
     {
+        $this->checkRolePermission('view-instructor');
         if ($request->ajax()) {
 
             $data = Instructor::get();
@@ -35,6 +36,7 @@ class InstructorController extends Controller
      */
     public function create()
     {
+        $this->checkRolePermission('create-instructor');
         return view('backend.instructor.create');
     }
 
@@ -46,6 +48,7 @@ class InstructorController extends Controller
      */
     public function store(InstructorRequest $request)
     {
+        $this->checkRolePermission('create-instructor');
         $instructor = Instructor::create(
             [
                 'name' => $request->name,
@@ -71,6 +74,7 @@ class InstructorController extends Controller
      */
     public function show(Instructor $instructor)
     {
+        $this->checkRolePermission('view-instructor');
         return view('backend.instructor.details', ['instructor' => $instructor]);
     }
 
@@ -82,6 +86,7 @@ class InstructorController extends Controller
      */
     public function edit(Instructor $instructor)
     {
+        $this->checkRolePermission('edit-instructor');
         return view( 'backend.instructor.edit', ['instructor' => $instructor]);
     }
 
@@ -94,6 +99,7 @@ class InstructorController extends Controller
      */
     public function update(InstructorRequest $request, Instructor $instructor)
     {
+        $this->checkRolePermission('edit-instructor');
         $instructor->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -117,6 +123,7 @@ class InstructorController extends Controller
      */
     public function destroy(Instructor $instructor)
     {
+        $this->checkRolePermission('delete-instructor');
         $instructor->delete();
 
         return response()->json(['success' => "Instructor'data is deleted."]);

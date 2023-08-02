@@ -17,6 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $this->checkRolePermission('view-user');
         if ($request->ajax()) {
 
             $data = User::get();
@@ -35,6 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->checkRolePermission('create-user');
         return view('backend.user.create');
     }
 
@@ -46,6 +48,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $this->checkRolePermission('create-user');
         User::create($request->except('_token'));
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully');
@@ -59,6 +62,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->checkRolePermission('view-user');
         return view('backend.user.details', ['user' => $user]);
     }
 
@@ -70,6 +74,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->checkRolePermission('edit-user');
         return view('backend.user.edit', ['user' => $user]);
     }   
 
@@ -82,6 +87,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        $this->checkRolePermission('edit-user');
         $user->update($request->except(['_token', '_method']));
 
         return redirect()->route('admin.users.index')->with('success', "User's data updated successfully!");
@@ -95,10 +101,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if(User::find($user->id)){
-            $user->delete();
-
-            return response()->json(['success' => "User'data is deleted."]);
-        }
+        $this->checkRolePermission('delete-user');
+        $user->delete();
+        return response()->json(['success' => "User'data is deleted."]);
     }
 }
