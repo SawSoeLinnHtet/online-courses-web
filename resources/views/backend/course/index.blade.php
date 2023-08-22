@@ -70,6 +70,7 @@
                             var editUrl = "{{ route('admin.courses.edit', ':id') }}".replace(':id', row.id);
                             var deleteUrl = "{{ route('admin.courses.destroy', ':id') }}".replace(':id', row.id);
                             var showUrl = "{{ route('admin.courses.show', ':id') }}".replace(':id', row.id);
+                            var episodeUrl = "{{ route('admin.courses.episodes.index', ':id') }}".replace(':id', row.id);
                             return `
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -85,6 +86,10 @@
                                         <a class="dropdown-item text-info" href="${showUrl}">
                                             <i class="fa-solid fa-eye me-1"></i> 
                                             Show
+                                        </a>
+                                        <a class="dropdown-item text-info" href="${episodeUrl}">
+                                            <i class="fa-solid fa-list-ul me-1"></i>
+                                            Episode
                                         </a>
                                     </div>
                                 </div>

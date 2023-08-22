@@ -98,40 +98,5 @@
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
     
     @stack('script')
-
-    <script>
-        function openFilePicker(callback) {
-            var input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function () {
-                var file = input.files[0];
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    callback(e.target.result);
-                };
-                reader.readAsDataURL(file);
-            };
-            input.click();
-        }
-        tinymce.init({
-            selector: '#summary',
-            plugins: 'tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' },
-            ],
-            image_caption: true,
-            file_picker_types: 'image',
-            file_picker_callback: function(callback, value, meta) {
-                openFilePicker(function (dataUrl) {
-                    callback(dataUrl);
-                });
-            }
-        });
-    </script>
 </body>
 </html>

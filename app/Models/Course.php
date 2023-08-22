@@ -25,4 +25,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function Episode()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

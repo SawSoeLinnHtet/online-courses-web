@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+
 return [
     'default' => [
         'view-dashboard',
@@ -33,9 +35,16 @@ return [
         'edit-instructor',
         'delete-instructor',
 
+        //category
         'view-category',
         'create-category',
         'edit-category',
         'delete-category',
+
+        //episode
+        'view-episode',
+        'create-episode',
+        'edit-episode',
+        'delete-episode'
     ]
 ];

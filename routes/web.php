@@ -51,6 +51,7 @@ Route::group([
     Route::resource('categories', CategoryController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('roles', RoleController::class);
+    Route::resource('courses.episodes', EpisodeController::class);
 });
 
 Route::group([

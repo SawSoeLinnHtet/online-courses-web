@@ -1,4 +1,4 @@
-<a href="#" data-url="{{ $action }}" class="{{ $style ?? 'dropdown-item' }} delete-btn text-info text-danger"><i class="bx bx-trash me-1"></i>Delete</a>
+<button data-url="{{ $action }}" class="{{ $style ?? 'dropdown-item' }} delete-btn text-info text-danger"><i class="bx bx-trash me-1"></i>Delete</button>
 
 @push('script')
     
@@ -26,6 +26,8 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let delete_url = $(this).data('url')
+
+                        console.log(delete_url);
 
                         $.ajax({
                             url: delete_url,

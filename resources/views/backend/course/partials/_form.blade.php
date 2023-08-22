@@ -39,11 +39,12 @@
 <div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="description">Summary</label>
     <div class="col-sm-10">
-        <textarea class="form-control text-secondary" id="summary" rows="5" name="summary">{{ $course->summary ?? '' }}</textarea>
+        <textarea class="form-control text-secondary" id="editor" rows="5" name="summary">{{ $course->summary ?? '' }}</textarea>
     </div>
 </div>
 
 @push('script')
+    <script src="/ckeditor/ckeditor.js"></script>s
     {!! JsValidator::formRequest('App\Http\Requests\Admin\CourseRequest') !!}
     <script>
         $(document).ready(function() {
@@ -54,5 +55,10 @@
                 theme: "classic"
             });
         });
+
+        CKEDITOR.replace( 'editor', {
+            removePlugins: 'exportpdf'
+        } );
+
     </script>
 @endpush
