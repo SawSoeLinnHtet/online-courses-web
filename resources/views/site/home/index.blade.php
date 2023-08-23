@@ -227,9 +227,9 @@
                     <div class="section-title pb-45">
                         <h5>Our course</h5>
                         <h2>Featured courses </h2>
-                    </div> <!-- section title -->
+                    </div>
                 </div>
-            </div> <!-- row -->
+            </div>
             <div class="row course-slied mt-30">
                 <div class="col-lg-4">
                     <div class="singel-course">
@@ -426,7 +426,7 @@
                 <div class="col-lg-6 order-last order-lg-first">
                     <div class="video text-lg-left text-center pt-50">
                         <a class="Video-popup" href="https://www.youtube.com/watch?v=bRRtdzJH1oE"><i class="fa fa-play"></i></a>
-                    </div> <!-- row -->
+                    </div>
                 </div>
                 <div class="col-lg-5 offset-lg-1 order-first order-lg-last">
                     <div class="feature pt-50">

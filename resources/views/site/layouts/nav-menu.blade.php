@@ -1,35 +1,12 @@
 <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-        <a class="active" href="index-2.html">Home</a>
-        <ul class="sub-menu">
-            <li><a class="active" href="index-2.html">Home 01</a></li>
-            <li><a href="index-3.html">Home 02</a></li>
-            <li><a href="index-4.html">Home 03</a></li>
-        </ul>
+        <a class="{{ request()->routeIs('site.home') ? 'active' : '' }}" href="{{ route('site.home') }}">Home</a>
     </li>
     <li class="nav-item">
-        <a href="about.html">About us</a>
-    </li>
-    <li class="nav-item">
-        <a href="courses.html">Courses</a>
-        <ul class="sub-menu">
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="courses-singel.html">Course Singel</a></li>
-        </ul>
-    </li>
-    <li class="nav-item">
-        <a href="events.html">Events</a>
-        <ul class="sub-menu">
-            <li><a href="events.html">Events</a></li>
-            <li><a href="events-singel.html">Event Singel</a></li>
-        </ul>
+        <a class="{{ request()->routeIs('site.courses.*') ? 'active' : '' }}" href="{{ route('site.courses.index') }}">Courses</a>
     </li>
     <li class="nav-item">
         <a href="teachers.html">Our teachers</a>
-        <ul class="sub-menu">
-            <li><a href="teachers.html">teachers</a></li>
-            <li><a href="teachers-singel.html">teacher Singel</a></li>
-        </ul>
     </li>
     <li class="nav-item">
         <a href="blog.html">Blog</a>

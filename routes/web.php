@@ -2,14 +2,15 @@
 
 use PharIo\Manifest\Email;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Site\CourseController;
 use App\Http\Controllers\Site\Auth\LoginController;
 use App\Http\Controllers\Site\Auth\RegisterController;
-use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPassword;
+use App\Http\Controllers\Site\Auth\ResetPasswordController;
 use App\Http\Controllers\Site\Auth\ForgotPasswordController;
 use App\Http\Controllers\Site\Auth\EmailVerificationController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLogin;
+use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPassword;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController as AdminForgotPassword;
-use App\Http\Controllers\Site\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,4 +91,7 @@ Route::group([
     Route::get('/home', function () {
         return view('site.home.index');
     })->name('home');
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/{course}/details', [CourseController::class, 'details'])->name('courses.details');
 });
+
