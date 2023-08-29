@@ -8,7 +8,7 @@
 <div class="row mb-3">
     <label for="instructor" class="col-sm-2 col-form-label">Instructor Name</label>
     <div class="col-sm-10 position-relative pb-3">
-        <select class="form-select instructor_select" id="instructor" name="instructor_id" aria-label="Select Instructor Name">
+        <select class="form-select instructor_select" id="instructor" name="instructor_id" aria-label="Select Instructor Name" value="">
             <option value="">Select Instructor Name</option>
             @foreach ($instructors as $instructor)
                 <option value="{{ $instructor->id }}" {{ $instructor->id == ( $course->instructor_id ?? '' ) ? 'selected' : '' }}>{{ $instructor->name }}</option>
@@ -30,6 +30,27 @@
 </div>
 
 <div class="row mb-3">
+    <label class="col-sm-2 col-form-label" for="price">Price</label>
+    <div class="col-sm-10">
+        <input class="form-control text-dark" type="text" id="price" name="price" value="{{ $course->price ?? '' }}"/>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-sm-2 col-form-label" for="cover">Cover Photo</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="file" id="cover" name="cover_photo"/>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <label class="col-sm-2 col-form-label" for="image">Image</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="file" id="image" name="image"/>
+    </div>
+</div>
+
+<div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="description">Description</label>
     <div class="col-sm-10">
         <textarea class="form-control text-dark" id="description" rows="5" name="description">{{ $course->description ?? '' }}</textarea>
@@ -44,7 +65,7 @@
 </div>
 
 @push('script')
-    <script src="/ckeditor/ckeditor.js"></script>s
+    <script src="/ckeditor/ckeditor.js"></script>
     {!! JsValidator::formRequest('App\Http\Requests\Admin\CourseRequest') !!}
     <script>
         $(document).ready(function() {

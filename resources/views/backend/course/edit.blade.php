@@ -12,7 +12,7 @@
             </div>
             <div class="card bg-light mb-4">
                 <div class="card-body">
-                    <form action="{{ route('admin.courses.update', $course->id) }}" id="instructor-create-form" method="POST">
+                    <form action="{{ route('admin.courses.update', $course->id) }}" id="instructor-create-form" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         @include('backend.course.partials._form', ['disable' => false, 'categories' => $categories, 'instructors' => $instructors])

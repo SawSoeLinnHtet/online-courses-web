@@ -60,7 +60,22 @@ class CourseController extends Controller
     public function store(CourseRequest $request)
     {
         $this->checkRolePermission('create-course');
-        $course = Course::create($request->except('_token'));
+
+        $data = $request->validated();
+
+        if($request->hasFile('cover_photo') && $request->file('cover_photo')->isValid()) {
+            $file_name = uploadFile('images/courses/cover/', $request->cover_photo);
+
+            $data['cover_photo'] = $file_name;
+        }
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file_name = uploadFile('images/courses/image/', $request->image);
+
+            $data['image'] = $file_name;
+        }
+
+        $course = Course::create($data);
 
         $course->Category()->attach($request->category_ids);
 
@@ -107,8 +122,26 @@ class CourseController extends Controller
      */
     public function update(CourseRequest $request, Course $course)
     {
-        $this->checkRolePermission('edit-course');
-        $course->update($request->except(['_token', '_method']));
+        $this->checkRolePermission('edit-course');  
+        $data = $request->validated();
+
+        if ($request->hasFile('cover_photo') && $request->file('cover_photo')->isValid()) {
+            $file_name = uploadFile('images/courses/cover/', $request->cover_photo);
+
+            $data['cover_photo'] = $file_name;
+        }else{
+            $data['cover_photo'] = $course->cover_photo ?? null;
+        }
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file_name = uploadFile('images/courses/image/', $request->image);
+
+            $data['image'] = $file_name;
+        }else{
+            $data['image'] = $course->image ?? null;
+        }
+
+        $course->update($data);
 
         $course->Category()->sync($request->category_ids);
         // attach use in insert bcz attach not check unique 

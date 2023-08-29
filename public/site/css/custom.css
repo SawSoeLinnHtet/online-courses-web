@@ -1,0 +1,27 @@
+.episode-lists{
+    max-height: 500px;
+    padding-block: 30px;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.episode-wrap{
+    border-bottom: 1px solid #d4cfcf;
+}
+
+.episode-wrap:last-child{
+    border: none;
+}
+
+.episode-link{
+    padding: 10px;
+}
+
+.episode-link.active{
+    background-color: #FFD74D;
+    border-radius: 5px;
+}
+
+.episode-link.active h5{
+    color: #000;
+}

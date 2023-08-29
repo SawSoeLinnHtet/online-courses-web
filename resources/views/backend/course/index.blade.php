@@ -19,7 +19,7 @@
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Instructor</th>
-                                <th style="max-width: 200px">Category</th>
+                                <th>Category</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>

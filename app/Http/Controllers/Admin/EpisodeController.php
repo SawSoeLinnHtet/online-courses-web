@@ -49,12 +49,29 @@ class EpisodeController extends Controller
     public function store(EpisodeRequest $request, Course $course)
     {
         $this->checkRolePermission('create-episode');
-        $episode = Episode::create([
-            'title' => $request->title,
-            'summary' => $request->summary,
-            'course_id' => $course->id,
-            'privacy' => $request->privacy
-        ]);
+
+        $data = $request->validated();
+        if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+            $file_name = uploadFile('images/episodes/cover/', $request->cover);
+
+            $data['cover'] = $file_name;
+        }
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file_name = uploadFile('images/episodes/image/', $request->image);
+
+            $data['image'] = $file_name;
+        }
+
+        if ($request->hasFile('video') && $request->file('video')->isValid()) {
+            $file_name = uploadFile('images/episodes/image/', $request->video);
+
+            $data['video'] = $file_name;
+        }
+
+        $data['course_id'] = $course->id;
+
+        $episode = Episode::create($data);
 
         return redirect()->route('admin.courses.episodes.index', $course->id)->with('success', 'Episode created successfully');
     }
@@ -93,13 +110,34 @@ class EpisodeController extends Controller
     public function update(EpisodeRequest $request, Course $course, Episode $episode)
     {
         $this->checkRolePermission('delete-episode');
+        
+        $data = $request->validated();
 
-        $episode = $episode->update([
-            'title' => $request->title,
-            'summary' => $request->summary,
-            'course_id' => $course->id,
-            'privacy' => $request->privacy
-        ]);
+        if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+            $file_name = uploadFile('images/episodes/cover/', $request->cover);
+
+            $data['cover'] = $file_name;
+        }else{
+            $data['cover'] = $episode->cover;
+        }
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file_name = uploadFile('images/episodes/image/', $request->image);
+
+            $data['image'] = $file_name;
+        }else{
+            $data['image'] = $episode->image;
+        }
+
+        if ($request->hasFile('video') && $request->file('video')->isValid()) {
+            $file_name = uploadFile('videos/episodes/', $request->video);
+
+            $data['video'] = $file_name;
+        }else{
+            $data['video'] = $episode->video;
+        }
+
+        $episode->update($data);
 
         return redirect()->route('admin.courses.episodes.index', $course->id)->with('success', 'Episode updated successfully');
     }

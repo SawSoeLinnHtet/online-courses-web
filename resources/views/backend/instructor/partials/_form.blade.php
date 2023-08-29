@@ -35,7 +35,7 @@
                 type="radio"
                 value="male"
                 id="male"
-                {{ $instructor->gender ?? '' }}
+                {{ $instructor->gender == 'male' ? 'checked' : '' }}
             />
             <label class="form-check-label" for="male"> Male</label>
         </div>
@@ -46,7 +46,7 @@
                 type="radio"
                 value="female"
                 id="female"
-                {{ $instructor->gender ?? '' }}
+                {{ $instructor->gender == 'female' ? 'checked' : '' }}
             />
             <label class="form-check-label" for="female"> Female </label>
         </div>
@@ -73,6 +73,12 @@
     <label class="col-sm-2 col-form-label" for="phone">Phone No</label>
     <div class="col-sm-10">
         <input class="form-control" type="text" id="phone" name="phone" value="{{ $instructor->phone ?? '' }}"/>
+    </div>
+</div>
+<div class="row mb-3">
+    <label class="col-sm-2 col-form-label" for="cover">Profile</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="file" id="cover" name="profile"/>
     </div>
 </div>
 <div class="row mb-3">

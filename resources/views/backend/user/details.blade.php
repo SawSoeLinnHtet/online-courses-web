@@ -105,7 +105,7 @@
                         <x-admin.delete-btn style="btn btn-danger btn-sm text-white" :action="route('admin.users.destroy', $user->id)" />
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     </div>
 @endsection

@@ -40,4 +40,12 @@ class Instructor extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    public function getAcsrProfileAttribute()
+    {
+        if (isset($this->profile)) {
+            return asset('images/instructors/' . $this->profile);
+        }
+        return `https://i.pravatar.cc/150?img={{ $this->Instructor->id }}`;
+    }
 }

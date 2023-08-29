@@ -59,11 +59,11 @@
                 </div>
             </div>
             <div class="card">
-                <h5 class="card-header">Delete Account</h5>
+                <h5 class="card-header">Delete Course</h5>
                     <div class="mb-3 col-12 mb-0 px-4">
                         <div class="alert alert-warning">
-                            <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
-                            <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
+                            <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your course?</h6>
+                            <p class="mb-0">Once you delete your course, there is no going back. Please be certain.</p>
                         </div>
                         <x-admin.delete-btn style="btn btn-danger btn-sm text-white" :action="route('admin.courses.destroy', $course->id)" />
                     </div>

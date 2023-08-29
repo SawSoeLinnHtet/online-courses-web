@@ -49,19 +49,17 @@ class InstructorController extends Controller
     public function store(InstructorRequest $request)
     {
         $this->checkRolePermission('create-instructor');
-        $instructor = Instructor::create(
-            [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'gender' => $request->gender,
-                'dob' => $request->dob,
-                'phone' => $request->phone,
-                'bio' => $request->bio,
-                'address' => $request->address,
-                'links' => json_encode($request->links),
-            ]
-        );
+
+        $data = $request->validated();
+
+        if ($request->hasFile('profile') && $request->file('profile')->isValid()) {
+            $file_name = uploadFile('images/instructors/', $request->profile);
+
+            $data['profile'] = $file_name;
+        }
+
+        $data['links'] = json_encode($request->links);
+        $instructor = Instructor::create($data);
         
         return redirect()->route('admin.instructors.index')->with('success', 'Instructor created successfully!');
     }
@@ -100,17 +98,20 @@ class InstructorController extends Controller
     public function update(InstructorRequest $request, Instructor $instructor)
     {
         $this->checkRolePermission('edit-instructor');
-        $instructor->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'gender' => $request->gender,
-            'dob' => $request->dob,
-            'phone' => $request->phone,
-            'bio' => $request->bio,
-            'address' => $request->address,
-            'links' => json_encode($request->links),
-        ]);
+
+        $data = $request->validated();
+
+        if ($request->hasFile('profile') && $request->file('profile')->isValid()) {
+            $file_name = uploadFile('images/instructors/', $request->profile);
+
+            $data['profile'] = $file_name;
+        }else{
+            $data['profile'] = $instructor->profile ?? null;
+        }
+
+        $data['links'] = json_encode($request->links);
+
+        $instructor->update($data);
 
         return redirect()->route('admin.instructors.index')->with('success', 'Instructor data updated successfully!');
     }

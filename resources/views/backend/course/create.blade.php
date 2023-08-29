@@ -13,7 +13,7 @@
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.courses.store') }}" id="instructor-create-form" method="POST">
+                        <form action="{{ route('admin.courses.store') }}" id="instructor-create-form" method="POST" enctype="multipart/form-data">
                             @csrf
                             @include('backend.course.partials._form', ['disable' => false])
                             <div class="row justify-content-end">

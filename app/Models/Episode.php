@@ -13,6 +13,6 @@ class Episode extends Model
 
     public function Course()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }

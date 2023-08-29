@@ -20,7 +20,7 @@ class CreateEpisodesTable extends Migration
             $table->string('cover')->nullable();
             $table->string('image')->nullable();
             $table->text('video')->nullable();
-            $table->enum('privacy', ['public', 'privacy'])->default('public');
+            $table->enum('privacy', ['public', 'private'])->default('public');
             $table->foreignId('course_id');
             $table->timestamps();
 

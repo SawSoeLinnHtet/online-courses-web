@@ -2578,12 +2578,6 @@ p {
     border-bottom: 0;
 }
 
-.curriculam-cont .accordion .card .card-header a {
-	overflow: hidden;
-	display: block;
-    padding: 15px 15px;
-    background-color: #edf0f2;
-}
 .curriculam-cont .accordion .card .card-header a.collapsed{
     background-color: #fff;
     border: none;

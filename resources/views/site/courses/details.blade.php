@@ -1,29 +1,8 @@
 @extends('site.layouts.app')
 
 @section('content')
-
-    <section id="page-banner" class="pt-105 pb-110 bg_cover" data-overlay="8" style="background-image: url(images/page-banner-2.jpg)">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="page-banner-cont">
-                        <h2>
-                            {{ $course->title }}
-                        </h2>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Courses</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ $course->title }}</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     
-    <section id="corses-singel" class="pt-90 pb-120 gray-bg">
+    <section id="corses-singel" class="pt-20 pb-120 gray-bg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
@@ -36,7 +15,7 @@
                                 <li>
                                     <div class="teacher-name">
                                         <div class="thum">
-                                            <img src="{{ asset('site/images/course/teacher/t-1.jpg') }}" alt="Teacher">
+                                            <img src="{{ $course->Instructor->acsr_profile }}" alt="Teacher" style="width: 50px">
                                         </div>
                                         <div class="name">
                                             <span>Instructor</span>
@@ -44,26 +23,20 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="course-category">
-                                        <span>Category</span>
-                                        <h6>Programaming</h6>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                         
                         <div class="corses-singel-image pt-50">
-                            <img src="{{ asset('site/images/course/cu-1.jpg') }}" alt="Courses">
+                            <img src="{{ $course->acsr_course_cover }}" alt="Courses">
                         </div>
                         
                         <div class="corses-tab mt-30">
                             <ul class="nav nav-justified" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                                    <a class="active" id="curriculam-tab" data-toggle="tab" href="#curriculam" role="tab" aria-controls="curriculam" aria-selected="false">Episodes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id="curriculam-tab" data-toggle="tab" href="#curriculam" role="tab" aria-controls="curriculam" aria-selected="false">Episodes</a>
+                                    <a id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
                                 </li>
                                 <li class="nav-item">
                                     <a id="instructor-tab" data-toggle="tab" href="#instructor" role="tab" aria-controls="instructor" aria-selected="false">Instructor</a>
@@ -74,8 +47,23 @@
                             </ul>
                             
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                                <div class="tab-pane fade show active" id="curriculam" role="tabpanel" aria-labelledby="curriculam-tab">
+                                    @include('site.courses.partials.episodes_tab', ['episodes' => $episodes])
+                                </div>
+                                <div class="tab-pane fade" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                                     <div class="overview-description">
+                                        <div class="singel-description pt-40">
+                                            <h6>Categories</h6>
+                                            <div class="course-category mt-2">
+                                                <ul>
+                                                    @foreach ($course->Category as $key=>$category)
+                                                        <li class="d-inline-block">
+                                                            <span class="badge bg-primary text-white pb-1">{{ $category->title }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
                                         <div class="singel-description pt-40">
                                             <h6>Description</h6>
                                             <p>{{ $course->description }}</p>
@@ -83,38 +71,6 @@
                                         <div class="singel-description pt-40">
                                             <h6>Course Summary</h6>
                                             <p>{{ $course->summary }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="curriculam" role="tabpanel" aria-labelledby="curriculam-tab">
-                                    <div class="curriculam-cont">
-                                        <div class="title">
-                                            <h6>{{ $course->title }}</h6>
-                                        </div>
-                                        <div class="accordion" id="accordionExample">
-                                            @foreach ($episodes as $key=>$episode)
-                                                <div class="card">
-                                                    <div class="card-header" id="heading{{ $key }}">
-                                                        <a href="#" data-toggle="collapse" class="collapsed" data-target="#collapse{{ $key }}" aria-expanded="false" aria-controls="collapse{{ $key }}">
-                                                            <ul>
-                                                                <li><i class="fa fa-file-o"></i></li>
-                                                                <li>
-                                                                    <span class="head">{{ $episode->title }}</span>
-                                                                </li>
-                                                                <li><span class="time d-none d-md-block"><i class="fa fa-clock-o"></i> <span> 00.30.00</span></span></li>
-                                                            </ul>
-                                                        </a>
-                                                    </div>
-
-                                                    <div id="collapse{{ $key }}" class="collapse" aria-labelledby="heading{{ $key }}" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <p>
-                                                                {{ $episode->summary }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -274,8 +230,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
+                    </div>   
                 </div>
                 <div class="col-lg-4">
                     <div class="row">
@@ -284,12 +239,12 @@
                                <h4>Course Features </h4>
                                 <ul>
                                     <li><i class="fa fa-clock-o"></i>Duaration : <span>10 Hours</span></li>
-                                    <li><i class="fa fa-clone"></i>Leactures : <span>09</span></li>
+                                    <li><i class="fa fa-clone"></i>Episodes : <span>{{ $episodes->count() }}</span></li>
                                     <li><i class="fa fa-beer"></i>Quizzes :  <span>05</span></li>
                                     <li><i class="fa fa-user-o"></i>Students :  <span>100</span></li>
                                 </ul>
                                 <div class="price-button pt-10">
-                                    <span>Price : <b>$25</b></span>
+                                    <span class="d-block">Price : <b>$ {{ floatval($course->price) }}</b></span>
                                     <a href="#" class="main-btn">Enroll Now</a>
                                 </div>
                             </div>

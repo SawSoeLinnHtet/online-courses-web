@@ -1,4 +1,4 @@
-@if(auth()->guard('admin')->user()->can('view-dashboard'))
+@if(checkPermission('view-dashboard'))
     <li class="menu-item py-2 @if (Request::is('admin/dashboard')) {{'active'}} @endif">
         <a href="{{ route('admin.dashboard') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -7,7 +7,7 @@
     </li>
 @endif
 
-@if(auth()->guard('admin')->user()->can('view-admin'))
+@if(checkPermission('view-admin'))
     <li class="menu-item py-2 {{ (request()->segment(2) == 'admins') ? 'active' : '' }}">
         <a href="{{ route('admin.admins.index') }}" class="menu-link">
             <i class="menu-icon tf-icons fa-solid fa-user-tie"></i>
@@ -16,7 +16,7 @@
     </li>
 @endif
 
-@if(auth()->guard('admin')->user()->can('view-role'))
+@if(checkPermission('view-role'))
     <li class="menu-item py-2 {{ (request()->segment(2) == 'roles') ? 'active' : '' }}">
         <a href="{{ route('admin.roles.index') }}" class="menu-link">
             <i class="menu-icon tf-icons fa-solid fa-user-tie"></i>
@@ -25,7 +25,7 @@
     </li>
 @endif
 
-@if(auth()->guard('admin')->user()->can('view-instructor'))
+@if(checkPermission('view-instructor'))
     <li class="menu-item py-2 {{ (request()->segment(2) == 'instructors') ? 'active' : '' }}">
         <a href="{{ route('admin.instructors.index') }}" class="menu-link">
             <i class="menu-icon tf-icons fa-solid fa-user-graduate"></i>
@@ -34,7 +34,7 @@
     </li>
 @endif
 
-@if(auth()->guard('admin')->user()->can('view-user'))
+@if(checkPermission('view-user'))
     <li class="menu-item py-2 {{ (request()->segment(2) == 'users') ? 'active' : '' }}">
         <a href="{{ route('admin.users.index') }}" class="menu-link">
             <i class="menu-icon tf-icons fa-solid fa-users"></i>
@@ -47,7 +47,7 @@
     <span class="menu-header-text">Courses</span>
 </li>
 
-@if(auth()->guard('admin')->user()->can('view-course'))
+@if(checkPermission('view-course'))
     <li class="menu-item py-2 {{ (request()->segment(2) == 'courses') ? 'active' : '' }}">
         <a href="{{ route('admin.courses.index') }}" class="menu-link">
             <i class="menu-icon tf-icons fa-solid fa-book"></i>
@@ -56,7 +56,7 @@
     </li>
 @endif
 
-@if(auth()->guard('admin')->user()->can('view-category'))
+@if(checkPermission('view-category'))
     <li class="menu-item py-2 {{ (request()->segment(2) == 'categories') ? 'active' : '' }}">
         <a href="{{ route('admin.categories.index') }}" class="menu-link">
             <i class="menu-icon tf-icons fa-solid fa-shapes"></i>

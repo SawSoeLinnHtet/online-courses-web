@@ -13,7 +13,7 @@
             <div class="col-xxl">
                 <div class="card bg-light mb-4">
                     <div class="card-body">
-                        <form action="{{ route('admin.instructors.update', $instructor->id) }}" id="instructor-edit-form" method="POST">
+                        <form action="{{ route('admin.instructors.update', $instructor->id) }}" id="instructor-edit-form" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             @include('backend.instructor.partials._form', ['disable' => true])

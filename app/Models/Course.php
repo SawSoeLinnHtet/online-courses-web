@@ -4,17 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'instructor_id',
-        'description',
-        'summary'
-    ];
+    protected $guarded = [];
 
     public function Instructor()
     {
@@ -28,6 +24,14 @@ class Course extends Model
 
     public function Episode()
     {
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Course::class, 'id');
+    }
+
+    public function getAcsrCourseCoverAttribute()
+    {
+        if(isset($this->cover_photo)) {
+            return asset('images/courses/cover/'.$this->cover_photo);
+        }
+        return asset('site/images/course/cu-1.jpg');
     }
 }

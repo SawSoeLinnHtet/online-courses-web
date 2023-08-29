@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class EpisodeRequest extends FormRequest
 {
@@ -26,9 +27,10 @@ class EpisodeRequest extends FormRequest
         return [
             'title' => 'required',
             'privacy' => 'required',
-            'cover' => 'file|mimes:png,jpg,jpeg',
-            'image' => 'file|mimes:png,jpg,jpeg',
-            'video' => 'file|mimes:mp4,mov,avi,mpeg-4'
+            'cover' => 'nullable|file|mimes:png,jpg,jpeg',
+            'image' => 'nullable|file|mimes:png,jpg,jpeg',
+            'video' => 'nullable|mimes:mp4,ogx,ogg,oga,ogv,webm',
+            'summary' => 'nullable|min:20'
         ];
     }
 }

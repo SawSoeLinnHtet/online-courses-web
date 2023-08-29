@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class CourseRequest extends FormRequest
 {
@@ -21,12 +22,16 @@ class CourseRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             'title' => 'required',
             'instructor_id' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'price' => 'required',
+            'cover_photo' => 'file|mimes:png,jpg,jpeg|nullable|max:100000',
+            'image' => 'file|mimes:png,jpg,jpeg|nullable|max:100000',
+            'summary' => 'min:20'
         ];
     }
 }

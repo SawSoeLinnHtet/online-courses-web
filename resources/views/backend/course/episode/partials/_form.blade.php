@@ -47,6 +47,13 @@
     </div>
 </div>
 
+<div class="row justify-content-end">
+    <div class="col-sm-10 d-flex justify-content-end">
+        <a href="{{ route('admin.courses.episodes.index', request('course')) }}" class="btn btn-secondary me-3">Cancel</a>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </div>
+</div>
+
 @push('script')
     {!! JsValidator::formRequest('App\Http\Requests\Admin\EpisodeRequest') !!}
     <script src="/ckeditor/ckeditor.js"></script>

@@ -73,6 +73,12 @@
     </div>
 </div>
 <div class="row mb-3">
+    <label class="col-sm-2 col-form-label" for="cover">Profile</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="file" id="cover" name="profile"/>
+    </div>
+</div>
+<div class="row mb-3">
     <label class="col-sm-2 col-form-label" for="bio">Bio</label>
     <div class="col-sm-10">
         <textarea class="form-control" id="bio" rows="5" name="bio"></textarea>

@@ -31,7 +31,10 @@ class InstructorRequest extends FormRequest
                 'name' => 'required',
                 'email' => 'required|email|unique:instructors,email,' . $id,
                 'phone' => ['unique:instructors,phone,' . $id],
-                'dob' => 'required'
+                'dob' => 'required', 
+                'profile' => 'nullable|file|mimes:png,jpg,jpeg|nullable|max:100000',
+                'bio' => 'nullable|min:20',
+                'address' => 'nullable|min:20'
             ];
         } else {
             return [
@@ -39,7 +42,10 @@ class InstructorRequest extends FormRequest
                 'email' => 'required|email|unique:instructors,email',
                 'password' => 'required|confirmed|between:8,20|string',
                 'phone' => 'unique:instructors,phone',
-                'dob' => 'required'
+                'dob' => 'required',
+                'profile' => 'nullable|file|mimes:png,jpg,jpeg|nullable|max:100000',
+                'bio' => 'nullable|min:20',
+                'address' => 'nullable|min:20'
             ];
         }
     }

@@ -3,6 +3,7 @@
 use PharIo\Manifest\Email;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\CourseController;
+use App\Http\Controllers\Site\EpisodeController;
 use App\Http\Controllers\Site\Auth\LoginController;
 use App\Http\Controllers\Site\Auth\RegisterController;
 use App\Http\Controllers\Site\Auth\ResetPasswordController;
@@ -40,19 +41,18 @@ Route::post('admin/logout', [AdminLogin::class, 'logout'])->name('admin.logout')
 Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
-    'namespace' => 'App\Http\Controllers\Admin',
     'middleware' => 'auth.admin'
 ], function () {
     Route::get('/dashboard', function () {
         return view('backend.dashboard.index');
     })->name('dashboard');
-    Route::resource('admins', AdminController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('instructors', InstructorController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('courses', CourseController::class);
-    Route::resource('roles', RoleController::class);
-    Route::resource('courses.episodes', EpisodeController::class);
+    Route::resource('admins', App\Http\Controllers\Admin\AdminController::class);
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('instructors', App\Http\Controllers\Admin\InstructorController::class);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('courses', App\Http\Controllers\Admin\CourseController::class);
+    Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('courses.episodes', App\Http\Controllers\Admin\EpisodeController::class);
 });
 
 Route::group([
@@ -86,12 +86,12 @@ Route::group([
 Route::group([
     'as' => 'site.',
     'namespace' => 'App\Http\Controllers\Site',
-    'middleware' => 'auth'
 ], function () {
-    Route::get('/home', function () {
+    Route::get('/', function () {
         return view('site.home.index');
     })->name('home');
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/{course}/details', [CourseController::class, 'details'])->name('courses.details');
+    Route::get('/courses/{course}/episodes/{episode}', [EpisodeController::class, 'details'])->name('courses.episodes.details');
 });
 
