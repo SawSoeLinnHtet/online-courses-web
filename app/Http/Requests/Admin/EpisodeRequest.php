@@ -29,7 +29,7 @@ class EpisodeRequest extends FormRequest
             'privacy' => 'required',
             'cover' => 'nullable|file|mimes:png,jpg,jpeg',
             'image' => 'nullable|file|mimes:png,jpg,jpeg',
-            'video' => 'nullable|mimes:mp4,ogx,ogg,oga,ogv,webm',
+            'video' => 'nullable|file|mimes:mp4|mimetypes:video/mp4',
             'summary' => 'nullable|min:20'
         ];
     }

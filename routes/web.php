@@ -12,6 +12,7 @@ use App\Http\Controllers\Site\Auth\EmailVerificationController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLogin;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPassword;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController as AdminForgotPassword;
+use App\Http\Controllers\Site\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,9 +88,7 @@ Route::group([
     'as' => 'site.',
     'namespace' => 'App\Http\Controllers\Site',
 ], function () {
-    Route::get('/', function () {
-        return view('site.home.index');
-    })->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/{course}/details', [CourseController::class, 'details'])->name('courses.details');
     Route::get('/courses/{course}/episodes/{episode}', [EpisodeController::class, 'details'])->name('courses.episodes.details');

@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-4 p-3">
                     <div>
-                        <a href="" class="d-flex align-items-center btn btn-sm btn-link ">
+                        <a href="{{ route('site.courses.details', request('course')) }}" class="d-flex align-items-center btn btn-sm btn-link ">
                            <i class="fa fa-arrow-left mr-2" aria-hidden="true"></i>
                             Course Overview
                         </a>
@@ -32,7 +32,7 @@
                     <ul class="episode-lists">
                         @foreach ($episodes as $episode)
                             <li class="episode-wrap py-2 mb-3">
-                                <a href="#" class="d-flex episode-link active">
+                                <a href="{{ route('site.courses.episodes.details', [request('course'), $episode['id']]) }}" class="d-flex episode-link {{ $episode['id'] == $current_episode->id ? 'active' : ''}}">
                                     <div style="width: 50px; height: 50px" class="px-1">
                                         <img src="{{ asset('site/images/all-icon/man.png') }}" width="100%" height="100%" alt="">
                                     </div>
@@ -53,9 +53,9 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="col-8 p-3">
-                    <video width="500px" height="500px" controls="controls">
-                        <source src="https://www.youtube.com/watch?v=7CL0D3IPcVU&list=RDGMEMCMFH2exzjBeE_zAHHJOdxg&index=27"/>
+                <div class="col-8 bg-secondary">
+                    <video width="100%" height="500px" controls="controls">
+                        <source src="{{ asset('videos/episodes/'.$current_episode->video) }}"/>
                     </video>
                 </div>
             </div>

@@ -13,8 +13,8 @@
             <label for="public" class="form-check-label">Public</label>
         </div>
         <div>
-            <input name="privacy" class="form-check-input me-2" type="radio" value="private" id="public" {{ ($episode->privacy ?? '') == 'private' ? 'checked': '' }}/>
-            <label for="public" class="form-check-label">Private</label>
+            <input name="privacy" class="form-check-input me-2" type="radio" value="private" id="private" {{ ($episode->privacy ?? '') == 'private' ? 'checked': '' }}/>
+            <label for="private" class="form-check-label">Private</label>
         </div>
     </div>
 </div>

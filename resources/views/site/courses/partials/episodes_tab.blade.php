@@ -11,12 +11,12 @@
                                 </li>
                                 <li class="d-inline-block">
                                     <span class="head">
-                                        <a href="{{ route('site.courses.episodes.details', [request('course'),$episode->id]) }}" class="d-inline text-warning pl-2" style="font-weight: bold; font-size: 20px">
+                                        <a href="{{ route('site.courses.episodes.details', [request('course'), $episode->id]) }}" class="d-inline text-warning pl-2" style="font-weight: bold; font-size: 20px">
                                             {{ $episode->title }}
                                         </a>
                                     </span>
                                 </li>
-                                <li class="d-inline-block float-right pr-3"><span class="time d-none d-md-block"><i class="fa fa-clock-o "></i> <span> 00.30.00</span></span></li>
+                                <li class="d-inline-block float-right pr-3"><span class="time d-none d-md-block"><i class="fa fa-clock-o "></i> <span>00:30</span></span></li>
                             </ul>
                         </div>
                     </div>

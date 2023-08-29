@@ -64,7 +64,7 @@ class EpisodeController extends Controller
         }
 
         if ($request->hasFile('video') && $request->file('video')->isValid()) {
-            $file_name = uploadFile('images/episodes/image/', $request->video);
+            $file_name = uploadFile('videos/episodes/', $request->video);
 
             $data['video'] = $file_name;
         }

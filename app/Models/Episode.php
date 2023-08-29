@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use FFMpeg\FFMpeg;
+use FFMpeg\Coordinate\TimeCode;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Episode extends Model
 {
@@ -14,5 +16,10 @@ class Episode extends Model
     public function Course()
     {
         return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    public function getAcsrVideoDurationAttribute()
+    {
+        
     }
 }
