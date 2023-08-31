@@ -52,19 +52,19 @@ class EpisodeController extends Controller
 
         $data = $request->validated();
         if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
-            $file_name = uploadFile('images/episodes/cover/', $request->cover);
+            $file_name = uploadFile('public/images/episodes/cover/', $request->cover);
 
             $data['cover'] = $file_name;
         }
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file_name = uploadFile('images/episodes/image/', $request->image);
+            $file_name = uploadFile('public/images/episodes/image/', $request->image);
 
             $data['image'] = $file_name;
         }
 
         if ($request->hasFile('video') && $request->file('video')->isValid()) {
-            $file_name = uploadFile('videos/episodes/', $request->video);
+            $file_name = uploadFile('public/videos/episodes/', $request->video);
 
             $data['video'] = $file_name;
         }

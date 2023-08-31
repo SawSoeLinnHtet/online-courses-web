@@ -34,7 +34,7 @@
                             <li class="episode-wrap py-2 mb-3">
                                 <a href="{{ route('site.courses.episodes.details', [request('course'), $episode['id']]) }}" class="d-flex episode-link {{ $episode['id'] == $current_episode->id ? 'active' : ''}}">
                                     <div style="width: 50px; height: 50px" class="px-1">
-                                        <img src="{{ asset('site/images/all-icon/man.png') }}" width="100%" height="100%" alt="">
+                                        <img src="{{ asset('images/episodes/image/'.$episode['image']) }}" width="100%" height="100%" alt="">
                                     </div>
                                     <div class="ml-3">
                                         <h5 class="text-warning text-dark">
@@ -53,10 +53,18 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="col-8 bg-secondary">
+                <div class="col-8">
                     <video width="100%" height="500px" controls="controls">
                         <source src="{{ asset('videos/episodes/'.$current_episode->video) }}"/>
                     </video>
+                    <div class="py-3">
+                        <h5 class="mb-2">
+                            Summary
+                        </h5>
+                        <p>
+                            {!! $current_episode->summary !!}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
