@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use getID3;
 use App\Models\Course;
 use App\Models\Episode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\EpisodeRequest;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Admin\EpisodeRequest;
 
 class EpisodeController extends Controller
 {
@@ -67,6 +69,15 @@ class EpisodeController extends Controller
             $file_name = uploadFile('public/videos/episodes/', $request->video);
 
             $data['video'] = $file_name;
+
+            $path = Storage::path("public/videos/episodes/" . $file_name);
+
+            $getID3 = new getID3;
+            $video_file = $getID3->analyze($path);
+
+            $duration_seconds = $video_file['playtime_string'];
+
+            $data['duration'] = $duration_seconds;
         }
 
         $data['course_id'] = $course->id;
