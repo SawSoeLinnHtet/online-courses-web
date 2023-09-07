@@ -32,19 +32,19 @@
                     <ul class="episode-lists">
                         @foreach ($episodes as $key => $episode)
                             <li class="episode-wrap py-2 mb-3">
-                                <a href="{{ route('site.courses.episodes.details', [request('course'), $episode['slug']]) }}" class="d-flex episode-link {{ $episode['id'] == $current_episode->id ? 'active' : ''}}">
+                                <a href="{{ route('site.courses.episodes.details', [request('course'), $episode['slug']]) }}" class="d-flex episode-link {{ $episode['id'] == $current_episode->id ? 'active' : ''}}" style="{{ $episode->privacy == 'private' ? 'pointer-events: none' : '' }}">
                                     <div style="width: 50px; height: 50px" class="px-1">
-                                        <img src="{{ asset('images/episodes/image/'.$episode['image']) }}" width="100%" height="100%" alt="">
+                                        <img src="{{ $episode->acsr_episode_privacy }}" width="50px" height="50px" alt="">
                                     </div>
                                     <div class="ml-3">
                                         <h5 class="text-warning text-dark">
-                                            {{ $episode['title'] }}
+                                            {{ $episode->title }}
                                         </h5>
                                         <span style="font-size: 15px" class="mt-2 text-secondary">
                                             <span>Episode {{ $key + 1 }}</span>
                                             <span class="ml-3">
                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                                {{ $episode['duration'] }}
+                                                {{ $episode->duration }}
                                             </span>
                                         </span>
                                     </div>

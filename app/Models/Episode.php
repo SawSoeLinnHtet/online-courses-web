@@ -28,4 +28,12 @@ class Episode extends Model
     {
         return Str::limit($this->title, 20);
     }
+
+    public function getAcsrEpisodePrivacyAttribute()
+    {
+        if($this->privacy == 'public'){
+            return asset('images/episodes/cover/' . $this->cover);
+        }
+        return asset('site/images/lock.png');
+    }
 }
