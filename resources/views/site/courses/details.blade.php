@@ -15,7 +15,7 @@
                                 <li>
                                     <div class="teacher-name">
                                         <div class="thum">
-                                            <img src="{{ $course->Instructor->acsr_profile }}" alt="Teacher" style="width: 50px">
+                                            <img src="{{ $course->Instructor->acsr_profile }}" alt="Teacher" style="width: 50px; height: 50px">
                                         </div>
                                         <div class="name">
                                             <span>Instructor</span>
@@ -240,12 +240,10 @@
                                 <ul>
                                     <li><i class="fa fa-clock-o"></i>Duaration : <span>10 Hours</span></li>
                                     <li><i class="fa fa-clone"></i>Episodes : <span>{{ $episodes->count() }}</span></li>
-                                    <li><i class="fa fa-beer"></i>Quizzes :  <span>05</span></li>
-                                    <li><i class="fa fa-user-o"></i>Students :  <span>100</span></li>
                                 </ul>
                                 <div class="price-button pt-10">
-                                    <span class="d-block">Price : <b>$ {{ floatval($course->price) }}</b></span>
-                                    <a href="#" class="main-btn">Enroll Now</a>
+                                    <span class="d-block">Price : <b class="ml-2">{{ floatval($course->price) }} MMK</b></span>
+                                    <a href="#" class="main-btn d-block w-100 mt-5">Enroll Now</a>
                                 </div>
                             </div>
                         </div>

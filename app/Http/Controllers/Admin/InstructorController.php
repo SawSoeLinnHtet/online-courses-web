@@ -53,7 +53,7 @@ class InstructorController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('profile') && $request->file('profile')->isValid()) {
-            $file_name = uploadFile('images/instructors/', $request->profile);
+            $file_name = uploadFile('public/images/instructors/', $request->profile);
 
             $data['profile'] = $file_name;
         }
@@ -102,7 +102,7 @@ class InstructorController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('profile') && $request->file('profile')->isValid()) {
-            $file_name = uploadFile('images/instructors/', $request->profile);
+            $file_name = uploadFile('public/images/instructors/', $request->profile);
 
             $data['profile'] = $file_name;
         }else{

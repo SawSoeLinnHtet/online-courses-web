@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Course;
 use App\Models\Category;
 use App\Models\Instructor;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\CategoryCourse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Admin\CourseRequest;
-use Carbon\Carbon;
 
 class CourseController extends Controller
 {
@@ -62,19 +63,18 @@ class CourseController extends Controller
         $this->checkRolePermission('create-course');
 
         $data = $request->validated();
-
+        $data['slug'] = Str::slug($request->title);
         if($request->hasFile('cover_photo') && $request->file('cover_photo')->isValid()) {
-            $file_name = uploadFile('images/courses/cover/', $request->cover_photo);
+            $file_name = uploadFile('public/images/courses/cover/', $request->cover_photo);
 
             $data['cover_photo'] = $file_name;
         }
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file_name = uploadFile('images/courses/image/', $request->image);
+            $file_name = uploadFile('public/images/courses/image/', $request->image);
 
             $data['image'] = $file_name;
         }
-
         $course = Course::create($data);
 
         $course->Category()->attach($request->category_ids);
@@ -126,7 +126,7 @@ class CourseController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('cover_photo') && $request->file('cover_photo')->isValid()) {
-            $file_name = uploadFile('images/courses/cover/', $request->cover_photo);
+            $file_name = uploadFile('public/images/courses/cover/', $request->cover_photo);
 
             $data['cover_photo'] = $file_name;
         }else{
@@ -134,7 +134,7 @@ class CourseController extends Controller
         }
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file_name = uploadFile('images/courses/image/', $request->image);
+            $file_name = uploadFile('public/images/courses/image/', $request->image);
 
             $data['image'] = $file_name;
         }else{

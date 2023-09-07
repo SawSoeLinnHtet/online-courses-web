@@ -30,7 +30,7 @@ class Course extends Model
     public function getAcsrCourseCoverAttribute()
     {
         if(isset($this->cover_photo)) {
-            return asset('images/courses/cover/'.$this->cover_photo);
+            return asset('storage/images/courses/cover/'.$this->cover_photo);
         }
         return asset('site/images/course/cu-1.jpg');
     }

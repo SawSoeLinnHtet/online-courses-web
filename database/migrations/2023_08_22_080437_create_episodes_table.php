@@ -16,6 +16,7 @@ class CreateEpisodesTable extends Migration
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->longText('summary');
             $table->string('cover')->nullable();
             $table->string('image')->nullable();

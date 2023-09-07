@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use getID3;
 use App\Models\Course;
 use App\Models\Episode;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +54,7 @@ class EpisodeController extends Controller
         $this->checkRolePermission('create-episode');
 
         $data = $request->validated();
+        $data['slug'] = Str::slug($request->title);
         if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
             $file_name = uploadFile('public/images/episodes/cover/', $request->cover);
 
@@ -125,7 +127,7 @@ class EpisodeController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
-            $file_name = uploadFile('images/episodes/cover/', $request->cover);
+            $file_name = uploadFile('public/images/episodes/cover/', $request->cover);
 
             $data['cover'] = $file_name;
         }else{
@@ -133,7 +135,7 @@ class EpisodeController extends Controller
         }
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file_name = uploadFile('images/episodes/image/', $request->image);
+            $file_name = uploadFile('public/images/episodes/image/', $request->image);
 
             $data['image'] = $file_name;
         }else{
@@ -141,9 +143,18 @@ class EpisodeController extends Controller
         }
 
         if ($request->hasFile('video') && $request->file('video')->isValid()) {
-            $file_name = uploadFile('videos/episodes/', $request->video);
+            $file_name = uploadFile('public/videos/episodes/', $request->video);
 
             $data['video'] = $file_name;
+
+            $path = Storage::path("public/videos/episodes/" . $file_name);
+
+            $getID3 = new getID3;
+            $video_file = $getID3->analyze($path);
+
+            $duration_seconds = $video_file['playtime_string'];
+
+            $data['duration'] = $duration_seconds;
         }else{
             $data['video'] = $episode->video;
         }

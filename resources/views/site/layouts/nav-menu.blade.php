@@ -6,21 +6,10 @@
         <a class="{{ request()->routeIs('site.courses.*') ? 'active' : '' }}" href="{{ route('site.courses.index') }}">Courses</a>
     </li>
     <li class="nav-item">
-        <a href="teachers.html">Our teachers</a>
+        <a class="{{ request()->routeIs('site.instructors') ? 'active' : '' }}" href="{{ route('site.instructors') }}">Our Instructors</a>
     </li>
     <li class="nav-item">
-        <a href="blog.html">Blog</a>
-        <ul class="sub-menu">
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="blog-singel.html">Blog Singel</a></li>
-        </ul>
-    </li>
-    <li class="nav-item">
-        <a href="contact.html">Contact</a>
-        <ul class="sub-menu">
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="contact-2.html">Contact Us 2</a></li>
-        </ul>
+        <a class="{{ request()->routeIs('site.contact') ? 'active' : '' }}" href="{{ route('site.contact') }}">Contact Us</a>
     </li>
         <li class="nav-item">
         <a href="shop.html">Your Account</a>

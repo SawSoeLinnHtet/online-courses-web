@@ -36,28 +36,23 @@
                                         <div class="image">
                                             <img src="{{ $course->acsr_course_cover }}" alt="Course">
                                         </div>
-                                        <div class="price">
-                                            <span>
-                                                ${{ floatval($course->price) }}
-                                            </span>
-                                        </div>
                                     </div>
-                                    <div class="cont">
-                                        <a href="{{ route('site.courses.details', $course->id) }}">
-                                            <h4>
-                                                {{ $course->title }}
-                                            </h4>
-                                        </a>
-                                        <ul class="pb-3">
-                                            <p>
-                                                Categories:
-                                            </p>
+                                    <div class="cont p-3">
+                                        <ul class="pb-2">
                                             @foreach ($course->Category as $category)
                                                 <li>
                                                     <span class="badge badge-primary text-white pb-1">{{ $category->title }}</span>
                                                 </li>
                                             @endforeach
                                         </ul>
+                                        <a href="{{ route('site.courses.details', $course->slug) }}">
+                                            <h4 class="pb-2">
+                                                {{ $course->title }}
+                                            </h4>
+                                        </a>
+                                        <p class="pb-4 font-weight-bold">
+                                            {{ $course->price }} MMK
+                                        </p>
                                         <div class="course-teacher">
                                             <div class="thum">
                                                 <a href="#">

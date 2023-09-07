@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use FFMpeg\FFMpeg;
+use Illuminate\Support\Str;
 use FFMpeg\Coordinate\TimeCode;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,5 +22,10 @@ class Episode extends Model
     public function getAcsrVideoDurationAttribute()
     {
         
+    }
+
+    public function getAcsrTitleLimitAttribute()
+    {
+        return Str::limit($this->title, 20);
     }
 }

@@ -17,10 +17,10 @@
                             </div>
                             <div class="pl-3">
                                 <h4>
-                                    Laravel Zero To Hero
+                                    {{ $current_episode->title }}
                                 </h4>
                                 <span style="font-size: 15px">
-                                    <span>12 Episodes</span>
+                                    <span>{{ count($episodes) }} Episodes</span>
                                     <span class="ml-3">
                                         <i class="fa fa-clock-o" aria-hidden="true"></i>
                                         1hr 30min
@@ -30,9 +30,9 @@
                         </div>
                     </div>
                     <ul class="episode-lists">
-                        @foreach ($episodes as $episode)
+                        @foreach ($episodes as $key => $episode)
                             <li class="episode-wrap py-2 mb-3">
-                                <a href="{{ route('site.courses.episodes.details', [request('course'), $episode['id']]) }}" class="d-flex episode-link {{ $episode['id'] == $current_episode->id ? 'active' : ''}}">
+                                <a href="{{ route('site.courses.episodes.details', [request('course'), $episode['slug']]) }}" class="d-flex episode-link {{ $episode['id'] == $current_episode->id ? 'active' : ''}}">
                                     <div style="width: 50px; height: 50px" class="px-1">
                                         <img src="{{ asset('images/episodes/image/'.$episode['image']) }}" width="100%" height="100%" alt="">
                                     </div>
@@ -41,10 +41,10 @@
                                             {{ $episode['title'] }}
                                         </h5>
                                         <span style="font-size: 15px" class="mt-2 text-secondary">
-                                            <span>Episode 1</span>
+                                            <span>Episode {{ $key + 1 }}</span>
                                             <span class="ml-3">
                                                 <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                                1hr 30min
+                                                {{ $episode['duration'] }}
                                             </span>
                                         </span>
                                     </div>

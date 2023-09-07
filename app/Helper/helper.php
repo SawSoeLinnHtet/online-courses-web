@@ -14,7 +14,6 @@
         {
             $file_name = uniqid() . '_' . date('Y-m-d-H-i-s') . '_' . $file->getClientOriginalName();
 
-            // $file->move($path, $file_name);
             Storage::put($path . $file_name, file_get_contents($file));
 
             return $file_name;

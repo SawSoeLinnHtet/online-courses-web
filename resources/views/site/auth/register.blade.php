@@ -1,40 +1,45 @@
-@extends('site.layouts.auth-app')
+@extends('site.layouts.app')
 
 @section('content')
 
-<section class="signup">
-    <div class="container">
-        <div class="signup-content">
-            <div class="signup-form">
-                <h2 class="form-title">Sign up</h2>
+<section class="sign-in">
+    <div class="container d-flex align-items-center justify-content-start">
+        <div class="p-5">
+            <div class="signin-form" style="width: 400px">
+                <h2 class="form-title mb-3">Sign up</h2>
                 @include('site.layouts.auth-page-info')
                 <form method="POST" class="register-form" id="register-form" action="{{ route('site.post.register') }}">
                     @csrf
                     <div class="form-group">
-                        <label for="name"><i class="zmdi zmdi-account material-icons-name"></i>Name</label>
-                        <input type="text" name="name" id="name"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="email"><i class="zmdi zmdi-email"></i>Email</label>
-                        <input type="email" name="email" id="email"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="pass"><i class="zmdi zmdi-lock"></i>Password</label>
-                        <input type="password" name="password" id="pass"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i>Password Confirmation</label>
-                        <input type="password" name="password_confirmation" id="re_pass"/>
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp">
                     </div>
 
-                    <div class="form-group form-button">
-                        <button type="submit" id="signup" class="form-submit">Submit</button>
+                    <div class="form-group pt-3">
+                        <label for="your_name">Email address</label>
+                        <input type="email" class="form-control" name="email" id="your_name" aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="form-group pt-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="form-group pt-3">
+                        <label for="re-pass">Password Confirmation</label>
+                        <input type="password" class="form-control" name="password_confirmation" id="re_pass"  aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="form-group form-button pt-3">
+                        <button type="submit" class="form-submit w-100 border-none btn btn-md" style="background-color: #FFC600">
+                            Sign Up
+                        </button>
+                    </div>
+                    <div class="form-group form-button pt-3">
+                        <span>Already account?</span> 
+                        <a href="{{ route('site.get.login') }}">Login here</a>
                     </div>
                 </form>
-            </div>
-            <div class="signup-image">
-                <figure><img src="{{ asset('site/auth/images/signup-image.jpg') }}" alt="sing up image"></figure>
-                <a href="{{ route('site.get.login') }}" class="signup-image-link">I am already member</a>
             </div>
         </div>
     </div>

@@ -20,7 +20,7 @@ class RegisterController extends Controller
         $user = User::create($request->validated());
 
         $this->setResend($user);
-        return redirect()->route('verification.request');
+        return redirect()->route('verification.sent');
     }
 
     public function setResend($user)

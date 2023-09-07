@@ -90,7 +90,13 @@ Route::group([
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
-    Route::get('/courses/{course}/details', [CourseController::class, 'details'])->name('courses.details');
-    Route::get('/courses/{course}/episodes/{episode}', [EpisodeController::class, 'details'])->name('courses.episodes.details');
+    Route::get('/courses/{course:slug}/details', [CourseController::class, 'details'])->name('courses.details');
+    Route::get('/courses/{course:slug}/episodes/{slug}', [EpisodeController::class, 'details'])->name('courses.episodes.details');
+    Route::get('/contact', function () {
+        return view('site.contact_us.index');
+    })->name('contact');
+    Route::get('/instructors', function () {
+        return view('site.instructors.index');
+    })->name('instructors');
 });
 
